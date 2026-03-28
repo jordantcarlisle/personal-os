@@ -1,1 +1,230 @@
-/* Cipher brand theme — populated in next task */
+/* ============================================
+   Personal OS — Cipher Brand Theme
+   Colors: River Blue, Forest Green, Warm Coral
+   Typography: Inter (sans), JetBrains Mono (mono)
+   ============================================ */
+
+/* --- Fonts --- */
+:root {
+  --sl-font: 'Inter', system-ui, -apple-system, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, monospace;
+}
+
+/* --- Light Mode (default) --- */
+:root[data-theme='light'] {
+  /* Accent: River Blue */
+  --sl-color-accent-low: #dce8f0;
+  --sl-color-accent: #4A7699;
+  --sl-color-accent-high: #2c4a60;
+
+  /* Backgrounds */
+  --sl-color-bg: #FAF8F2;
+  --sl-color-bg-nav: #F2EFE8;
+  --sl-color-bg-sidebar: #F5F2EC;
+  --sl-color-bg-inline-code: #EDE9E0;
+
+  /* Text */
+  --sl-color-text: #2D3436;
+  --sl-color-text-accent: #3a6585;
+
+  /* Grays (warm-tinted) */
+  --sl-color-gray-1: #eae7e0;
+  --sl-color-gray-2: #c8c4bb;
+  --sl-color-gray-3: #918d84;
+  --sl-color-gray-4: #5e5a52;
+  --sl-color-gray-5: #3d3a34;
+  --sl-color-gray-6: #2a2824;
+  --sl-color-black: #1a1816;
+  --sl-color-white: #FAF8F2;
+
+  /* Hairlines */
+  --sl-color-hairline-light: #e2dfd8;
+  --sl-color-hairline: #d4d0c8;
+  --sl-color-hairline-shade: #c0bcb2;
+}
+
+/* --- Dark Mode --- */
+:root[data-theme='dark'] {
+  /* Accent: River Blue (lighter for dark bg) */
+  --sl-color-accent-low: #1e3344;
+  --sl-color-accent: #6ba3c7;
+  --sl-color-accent-high: #b8d4e8;
+
+  /* Backgrounds */
+  --sl-color-bg: #1C2826;
+  --sl-color-bg-nav: #1a2523;
+  --sl-color-bg-sidebar: #1e2a28;
+  --sl-color-bg-inline-code: #243230;
+
+  /* Text */
+  --sl-color-text: #E8E4DF;
+  --sl-color-text-accent: #8dbfe0;
+
+  /* Grays (forest-tinted) */
+  --sl-color-gray-1: #d4d0cb;
+  --sl-color-gray-2: #9e9b94;
+  --sl-color-gray-3: #6b6860;
+  --sl-color-gray-4: #454240;
+  --sl-color-gray-5: #2e3230;
+  --sl-color-gray-6: #222826;
+  --sl-color-black: #151b19;
+  --sl-color-white: #F0ECE6;
+
+  /* Hairlines */
+  --sl-color-hairline-light: #2e3836;
+  --sl-color-hairline: #263230;
+  --sl-color-hairline-shade: #1a2422;
+}
+
+/* --- Admonition / Badge Colors --- */
+:root {
+  --sl-hue-green: 150;
+  --sl-hue-orange: 15;
+  --sl-hue-blue: 205;
+  --sl-hue-red: 7;
+  --sl-hue-purple: 35;
+}
+
+/* --- Content Width --- */
+:root {
+  --sl-content-width: 50rem;
+}
+
+/* --- Link Styling --- */
+.sl-markdown-content a {
+  text-decoration-color: var(--sl-color-accent);
+  text-underline-offset: 0.15em;
+}
+.sl-markdown-content a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* --- Code Block Styling --- */
+:root[data-theme='light'] .expressive-code .frame {
+  --code-background: #F0EDE6;
+}
+:root[data-theme='dark'] .expressive-code .frame {
+  --code-background: #1e2a28;
+}
+
+/* --- Hero Section (landing page) --- */
+.hero {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+.hero h1 {
+  font-size: var(--sl-text-5xl);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.hero .tagline {
+  font-size: var(--sl-text-xl);
+  color: var(--sl-color-gray-3);
+  max-width: 36rem;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+/* --- Value Props Grid --- */
+.value-props {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.value-prop {
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--sl-color-hairline);
+  background: var(--sl-color-bg-sidebar);
+}
+.value-prop h3 {
+  font-size: var(--sl-text-lg);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.value-prop p {
+  color: var(--sl-color-gray-3);
+  line-height: 1.6;
+}
+
+/* --- Platform Badges --- */
+.platforms {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+.platform-badge {
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+  border: 1px solid var(--sl-color-hairline);
+  font-size: var(--sl-text-sm);
+  font-weight: 500;
+  color: var(--sl-color-gray-3);
+}
+
+/* --- Modules Grid --- */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.module-card {
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--sl-color-hairline);
+  background: var(--sl-color-bg-sidebar);
+}
+.module-card h4 {
+  font-size: var(--sl-text-base);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.module-card p {
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-gray-3);
+  margin: 0;
+}
+
+/* --- CTA Section --- */
+.cta-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+.cta-section h2 {
+  font-size: var(--sl-text-2xl);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.cta-section pre {
+  text-align: left;
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-size: var(--sl-text-sm);
+}
+
+/* --- Section Dividers --- */
+.section {
+  padding: 4rem 0;
+}
+.section-title {
+  text-align: center;
+  font-size: var(--sl-text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sl-color-accent);
+  margin-bottom: 2rem;
+}
