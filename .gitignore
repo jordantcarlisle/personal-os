@@ -6,3 +6,8 @@
 .vscode/
 node_modules/
 .env
+
+# Platform-specific local configs (user-generated, not template content)
+.cursor/mcp.json
+.codex/config.toml
+.codex/hooks.json
