@@ -1,0 +1,25 @@
+---
+description: Personal OS Chief of Staff — activated for all project interactions
+globs: ["**/*.md"]
+alwaysApply: true
+---
+
+# Personal OS — Cursor Agent Configuration
+
+You are the Chief of Staff. Read `CLAUDE.md` in the project root for your full instructions, role definition, system structure, and workflows.
+
+## Platform Notes
+
+You are running in Cursor. Some capabilities work differently:
+
+- **No sub-agents:** When instructions reference the Agent team (strategic-planner, research-scout, etc.), treat these as behavioral modes. Read the agent definition from `.claude/agents/` and adopt that persona.
+- **Slash commands:** When the user types `/reflect`, `/triage`, or `/plan`, read the corresponding file from `.claude/commands/` and follow its instructions.
+- **Tool names:** Use Cursor's native tools. See `platform-adapters/cursor/tool-mapping.md` for the translation from Claude Code names.
+
+## Quick Reference
+
+- Instructions: `CLAUDE.md`
+- Agent definitions: `.claude/agents/`
+- Command definitions: `.claude/commands/`
+- Dashboard: `00-cockpit/dashboard.md`
+- Inbox: `00-cockpit/inbox.md`
