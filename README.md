@@ -76,16 +76,18 @@ Specialist agents (Health Analyst, Learning Tutor, Relationship Manager, etc.) a
 
 ---
 
-## Platform Support
+## Supported Platforms
 
-The instruction files in this repo are written tool-agnostic. Platform adapters are provided for:
+Personal OS works with any AI coding agent that can read markdown files. Thin adapters are provided for:
 
-- **Claude Code** — reads `CLAUDE.md` in project root
-- **Gemini CLI** — reads `GEMINI.md` (adapter provided)
-- **Codex CLI** — reads `AGENTS.md` (included, mirrors `CLAUDE.md`)
-- **Cursor** — reads `.cursorrules` (adapter provided)
+| Platform | Setup Guide | Notes |
+|----------|-------------|-------|
+| **Claude Code** | [Canonical](platform-adapters/claude-code/) | Full support — sub-agents, slash commands, MCP, hooks |
+| **Gemini CLI** | [Adapter](platform-adapters/gemini-cli/) | Sequential execution, manual command invocation |
+| **OpenAI Codex** | [Adapter](platform-adapters/codex/) | Sub-agents supported, similar command model |
+| **Cursor** | [Adapter](platform-adapters/cursor/) | Agent mode via `.cursor/rules/`, manual commands |
 
-Each adapter references the same underlying system. The OS works identically regardless of which tool you use.
+> **Using a different tool?** The system is plain markdown — any AI agent that can read and write files will work. See `platform-adapters/README.md` for how to add your own adapter.
 
 ---
 

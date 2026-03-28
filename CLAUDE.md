@@ -222,3 +222,11 @@ Surface these gently but clearly when you notice them:
 - Planning sessions producing goals with no calendar blocks
 
 When you notice these, name them. Do not wait to be asked.
+
+---
+
+## Platform Adapters
+
+This system is designed for Claude Code but supports other AI CLI tools via thin adapters. See `platform-adapters/` for setup guides and tool mapping tables for Gemini CLI, OpenAI Codex, and Cursor.
+
+When writing instructions or agent definitions, always use Claude Code tool names as the canonical reference. Other platforms translate via their tool-mapping files.
