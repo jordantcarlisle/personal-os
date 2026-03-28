@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.obsidian/
+.vscode/
+node_modules/
+.env
