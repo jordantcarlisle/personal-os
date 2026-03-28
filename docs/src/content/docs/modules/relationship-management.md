@@ -1,0 +1,48 @@
+---
+title: Relationship Management
+description: Track contacts, monitor relationship health, and prepare for every important conversation.
+---
+
+## What
+
+The Relationship Management module adds a structured contact system to your Personal OS, backed by a dedicated relationship manager agent. Every important person in your network gets a profile: their role in your life, how recently you've been in contact, what you last discussed, and what you owe them. The agent monitors relationship health passively — flagging contacts who are drifting — and preps you for conversations before they happen. The `/network` command surfaces your current relationship health at a glance and shows you who needs attention.
+
+## Why
+
+Relationships decay silently. You mean to follow up, then a month passes, then the moment feels awkward. Most professionals manage their networks reactively — reaching out when they need something rather than maintaining consistent contact. The Relationship Management module inverts this: the system monitors the relationships so you don't have to hold them in your head. When a key contact hasn't heard from you in 60 days, your agent surfaces it before the relationship weakens, not after. The domain benefits from agent support because the relevant signals (time elapsed, context from past conversations, what matters to the person) are exactly the kind of thing a system tracks better than memory.
+
+## What Gets Added
+
+| Item | Path | Purpose |
+|------|------|---------|
+| Contact database | External (Notion or CSV) | Single source of truth for all contacts |
+| Relationship area folder | `02-areas/relationships/` | Local notes and relationship strategy |
+| Decay thresholds | `02-areas/relationships/thresholds.md` | How often to touch each relationship tier |
+| Agent definition | `02-areas/relationships/agent.md` | Relationship manager agent configuration |
+| Network playbook | `03-resources/playbooks/relationship-strategy.md` | How to approach different relationship types |
+
+**Agent:** relationship-manager — monitors contact health, preps meeting briefs, logs interactions, and surfaces decaying relationships during weekly review.
+
+**Command:** `/network` — runs a relationship health scan and surfaces who needs attention this week.
+
+## Integration Points
+
+The relationship module activates automatically in two parts of your weekly review. First, the agent asks who you met with or spoke to during the week and updates their contact records — last contacted date, interaction notes, anything notable they mentioned. Second, it runs a decay report: contacts who are past their threshold for the relationship tier, surfaced with suggested next actions.
+
+Before important meetings, the agent proactively pulls the contact's profile — last interaction, their interests, any open follow-through items — so you enter the conversation with context rather than scrambling to remember.
+
+When someone new is mentioned in a conversation, the agent checks whether they have a profile and asks if you want to add them. This keeps the database current without requiring manual upkeep.
+
+## Example Session
+
+```
+You: /network
+
+Agent: Relationship health — week of 2026-03-24
+
+Decaying (past threshold):
+- Marcus Chen (High tier, 90-day threshold) — last contacted 2026-01-02. He mentioned wanting to connect about his new role. Worth a short message this week.
+- Sarah Okonkwo (Critical tier, 14-day threshold) — last contacted 2026-03-08. You have an open item: she asked for a book recommendation.
+
+New this week to log: You met with David Park (2026-03-26). Want me to update his record?
+```

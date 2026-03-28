@@ -1,0 +1,306 @@
+---
+title: Your First Day
+description: Walk through a complete first day with Personal OS — morning reflection, inbox triage, daily planning, the work itself, and evening review.
+---
+
+The system has three daily rituals: reflect, triage, and plan. Each one is a command. Each one has a clear job. Together they take 30-40 minutes across the day and give you a structured context for everything in between.
+
+This page walks through what a first day actually looks like — realistic terminal dialogue, what the agent does at each step, and what you should expect.
+
+## The Shape of a Day
+
+```
+Morning (20-30 min)
+  /reflect   → ground yourself, set intentions, energy check
+  /triage    → scan inbound, surface what needs attention
+  /plan      → build the sprint, timebox, push back on overcommitment
+
+The Work (whatever you're working on)
+  /capture   → add anything new that surfaces during the day
+
+Evening (10-15 min)
+  /reflect   → wins, lessons, habit check, tomorrow prep
+```
+
+That's it. The rituals bookend the day. Everything else is execution.
+
+---
+
+## Morning: /reflect
+
+Run this first thing. Before email, before Slack, before the day has a chance to get reactive.
+
+```
+> /reflect
+```
+
+```
+Agent: Good morning. Let's start with gratitude — what are 3 things
+       you're grateful for this morning?
+
+You:   The project is actually moving. I got a full night of sleep.
+       And it's quiet before the kids wake up.
+
+Agent: Good start. What's your goal for today — the one thing that
+       would make this day a win regardless of what else happens?
+
+You:   Ship the first version of the onboarding flow.
+
+Agent: Got it. Now your Top 3 Targets — what are the THREE most
+       important things you need to complete today?
+
+You:   1. Finish the onboarding UI component
+       2. Write the welcome email sequence
+       3. Block time with my co-founder to review pricing
+
+Agent: How's your energy this morning? High, Medium, or Low?
+
+You:   Solid. High.
+
+Agent: Perfect. High energy — I'll route you to deep work and hard
+       decisions first, keep admin for the afternoon.
+
+       Writing your Top 3 and energy to the dashboard...
+
+       [Updated 00-cockpit/dashboard.md]
+
+       Journal entry written. Ready for triage?
+```
+
+The agent has now:
+- Written your morning reflection to your journal
+- Updated `00-cockpit/dashboard.md` with your Top 3 and energy level
+- Set the context for the rest of the day
+
+---
+
+## Morning: /triage
+
+Run this immediately after reflect. Triage scans everything inbound and surfaces what actually needs your attention.
+
+```
+> /triage
+```
+
+```
+Agent: Running morning triage. Checking calendar, inbox, projects...
+
+CALENDAR (today)
+  09:30 — Engineering standup (30 min)
+  14:00 — 1:1 with direct report, Maya (45 min)
+  ⚠  No buffer between 09:30 and your first deep work block
+
+EMAIL (3 items flagged)
+  → Contract renewal from legal — needs signature by Friday
+  → Reply from investor prospect — follow-up on your intro email
+  → Team question about the API spec — looks like a blocker
+
+INBOX (00-cockpit/inbox.md)
+  7 unprocessed items
+
+PROJECTS
+  ⚠  "Investor outreach" has no next action — what's the next step?
+  ✓  "Onboarding UI" looks current
+
+WAITING FOR
+  → Design review from Marcus (sent 12 days ago) — follow up?
+
+PRIORITY SYNTHESIS
+
+  Urgent + Important:
+    - API spec question (blocker for your team — reply before standup)
+    - Contract signature (by Friday, but start today)
+
+  Important, Not Urgent:
+    - Investor response (high signal — respond today)
+    - Process inbox to zero
+
+  Can defer:
+    - Everything else
+
+  Recommendation: Reply to API spec now, then start your deep work
+  block. Handle contract and investor response after standup.
+
+Want me to help you reply to the API spec question before standup?
+```
+
+Notice what triage is doing: it's not showing you everything — it's synthesizing. The Eisenhower matrix framing (Urgent+Important, Important-not-Urgent, etc.) is built into the triage command, not something you have to apply manually.
+
+If you say yes to the API spec reply, the agent drafts a response for you to review. It never sends anything without your explicit approval.
+
+---
+
+## Morning: /plan
+
+After triage, you know what's in the environment. Now you build the sprint.
+
+```
+> /plan
+```
+
+```
+Agent: Let's build today's sprint. You have:
+  - Standup at 09:30 (30 min)
+  - 1:1 at 14:00 (45 min)
+  - That's 1h15m of fixed commitments
+
+  With transitions and lunch, you have roughly 4.5 hours of available
+  deep work time.
+
+  Your Top 3 from this morning:
+    1. Finish onboarding UI component
+    2. Write welcome email sequence
+    3. Co-founder pricing review
+
+  Estimate these for me — how long does each actually take?
+
+You:   Onboarding UI is probably 3 hours, the emails are 90 minutes,
+       pricing review is an hour.
+
+Agent: That's 5.5 hours of committed work against 4.5 hours available.
+       You're 1 hour over.
+
+       Options:
+         A. Drop the pricing review to tomorrow — it's a meeting,
+            easier to reschedule than deep work
+         B. Scope down the email sequence to one email today
+         C. Your call
+
+You:   Move pricing review to tomorrow. I'll schedule it now.
+
+Agent: Done. Committed sprint:
+
+  1. Onboarding UI component      [3h, deep work, morning]
+  2. Welcome email sequence       [90min, creative, afternoon]
+
+  Timeboxing onto your calendar...
+  [Created: "Deep Work — Onboarding UI" 08:00-11:00]
+  [Created: "Welcome emails" 11:30-13:00]
+  [Blocked: 13:00-14:00 as buffer + prep for 1:1]
+
+  You're set. Start on the onboarding UI — that's your highest-value
+  deep work and your energy is high right now.
+```
+
+The agent enforced the constraint. You tried to commit to more than you had time for, and it caught it before you committed to it. This is the /plan command's core job.
+
+---
+
+## During the Day: /capture
+
+New things will surface during the day. Use /capture to add them to your inbox without breaking your flow.
+
+```
+> /capture
+```
+
+```
+Agent: What do you want to capture?
+
+You:   Check if the onboarding analytics are firing correctly after
+       I ship today
+
+Agent: Captured to inbox.
+
+       [Added to 00-cockpit/inbox.md:
+        "Verify onboarding analytics post-ship — check event firing"]
+
+       Back to work.
+```
+
+That's it. Two seconds, then you're back in the flow. The item is in your inbox, not in your head.
+
+---
+
+## Evening: /reflect
+
+Run this at the end of your workday — before dinner, not right before bed. You want time to act on tomorrow prep if anything surfaces.
+
+```
+> /reflect
+```
+
+```
+Agent: Good evening. Let's close out the day.
+
+       What were your wins today? Don't be modest — brag zone.
+
+You:   Shipped the onboarding component. Actually works on mobile
+       too, which I wasn't planning. Sent two of the three emails.
+       And my 1:1 with Maya went well — she's stepping up.
+
+Agent: Strong day. What did you learn, or what would you do differently?
+
+You:   I underestimated how long the mobile layout would take.
+       Should have blocked an extra 30 minutes of buffer on
+       any UI work going forward.
+
+Agent: Good lesson. I'll note that for future planning estimates.
+
+       Rate the day 1-10?
+
+You:   8. Good output, stayed focused.
+
+Agent: Habit check. You said you're tracking:
+  - Morning workout
+  - Evening reading
+  - Co-founder weekly sync
+
+  Morning workout — yes or no?
+
+You:   Yes.
+
+Agent: Evening reading?
+
+You:   No. Going to do it after this.
+
+Agent: Co-founder sync (weekly)?
+
+You:   Skipping — we're doing it tomorrow.
+
+Agent: Marked for tomorrow. Updating tracker...
+       [Updated 05-habits/tracker.md]
+
+       Anything you need to make sure happens tomorrow?
+
+You:   The pricing review with my co-founder. And I should follow up
+       on the Marcus design review — that's been 12 days.
+
+Agent: Captured both to inbox.
+
+       Journal entry written. Dashboard updated.
+
+       Good work today. See you tomorrow.
+```
+
+The agent has:
+- Written the evening reflection to your journal
+- Updated `05-habits/tracker.md` with today's habit completions
+- Added tomorrow items to your inbox for processing in the morning triage
+
+---
+
+## What Compounds Over Time
+
+After your first day, the system has a data point. After a week, it has a pattern. After a month, it knows things about how you work that take human executive coaches years to observe.
+
+It will notice that your estimates are consistently 30% optimistic. It will surface that a project has had the same "next action" for three weeks. It will remind you that you committed to a habit on day one and haven't marked it complete in ten days.
+
+None of that happens on day one. But day one is how it starts.
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `00-cockpit/dashboard.md` | Updated every morning and evening — your current state |
+| `00-cockpit/inbox.md` | Everything that surfaces during the day — processed during triage |
+| `05-habits/tracker.md` | Updated during evening reflect — your habit record |
+| `.claude/commands/reflect.md` | The full reflect command definition |
+| `.claude/commands/triage.md` | The full triage command definition |
+| `.claude/commands/plan.md` | The full plan command definition |
+
+## Next Steps
+
+- **[The Daily Loop](/core-framework/daily-loop)** — Deeper dive into how each ritual works
+- **[GTD in Practice](/core-framework/gtd)** — How the inbox-and-capture system works
+- **[Modules](/modules)** — Extend the system into health, learning, and relationships
