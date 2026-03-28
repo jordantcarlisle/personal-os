@@ -732,6 +732,12 @@ body,
   transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
+/* Site title — use primary text color, not accent */
+.site-title {
+  color: var(--sl-color-text) !important;
+  font-weight: 700 !important;
+}
+
 /* Nav bar — force warm cream on landing in light mode */
 :root[data-theme='light'] [data-has-hero] .header {
   background: #F2EFE8;
