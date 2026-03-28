@@ -11,3 +11,8 @@ node_modules/
 .cursor/mcp.json
 .codex/config.toml
 .codex/hooks.json
+
+# Docs site build artifacts
+docs/node_modules/
+docs/dist/
+docs/.astro/
