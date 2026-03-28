@@ -1,33 +1,46 @@
 /* ============================================
    Personal OS — Cipher Brand Theme
-   Colors: River Blue, Forest Green, Warm Coral
-   Typography: Inter (sans), JetBrains Mono (mono)
+   "Dawn in a field lab"
+
+   Three typography layers:
+     Technology: JetBrains Mono
+     Human:     Inter
+     Nature:    Instrument Serif (italic)
+
+   Four signal colors:
+     Blue   #5B8DEF — intelligence, method
+     Green  #34B87D — growth, emergence
+     Gold   #D4A12A — unlock, transformation
+     Copper #B87550 — earth, grounding
    ============================================ */
 
-/* --- Fonts --- */
+/* --- Font Stacks --- */
 :root {
   --sl-font: 'Inter', system-ui, -apple-system, sans-serif;
   --sl-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, monospace;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+
+  /* Signal palette */
+  --signal-blue: #5B8DEF;
+  --signal-green: #34B87D;
+  --signal-gold: #D4A12A;
+  --signal-copper: #B87550;
 }
 
-/* --- Light Mode (default) --- */
+/* --- Light Mode (primary — "dawn in a field lab") --- */
 :root[data-theme='light'] {
-  /* Accent: River Blue */
   --sl-color-accent-low: #dce8f0;
   --sl-color-accent: #4A7699;
   --sl-color-accent-high: #2c4a60;
 
-  /* Backgrounds */
   --sl-color-bg: #FAF8F2;
   --sl-color-bg-nav: #F2EFE8;
   --sl-color-bg-sidebar: #F5F2EC;
   --sl-color-bg-inline-code: #EDE9E0;
 
-  /* Text */
-  --sl-color-text: #2D3436;
+  --sl-color-text: #1a1816;
   --sl-color-text-accent: #3a6585;
 
-  /* Grays (warm-tinted) */
   --sl-color-gray-1: #eae7e0;
   --sl-color-gray-2: #c8c4bb;
   --sl-color-gray-3: #918d84;
@@ -37,66 +50,61 @@
   --sl-color-black: #1a1816;
   --sl-color-white: #FAF8F2;
 
-  /* Hairlines */
   --sl-color-hairline-light: #e2dfd8;
   --sl-color-hairline: #d4d0c8;
   --sl-color-hairline-shade: #c0bcb2;
 }
 
-/* --- Dark Mode --- */
+/* --- Dark Mode (secondary — "deep forest") --- */
 :root[data-theme='dark'] {
-  /* Accent: River Blue (lighter for dark bg) */
   --sl-color-accent-low: #1e3344;
   --sl-color-accent: #6ba3c7;
   --sl-color-accent-high: #b8d4e8;
 
-  /* Backgrounds */
   --sl-color-bg: #1C2826;
   --sl-color-bg-nav: #1a2523;
   --sl-color-bg-sidebar: #1e2a28;
   --sl-color-bg-inline-code: #243230;
 
-  /* Text */
   --sl-color-text: #E8E4DF;
   --sl-color-text-accent: #8dbfe0;
 
-  /* Grays (forest-tinted) */
   --sl-color-gray-1: #d4d0cb;
-  --sl-color-gray-2: #9e9b94;
-  --sl-color-gray-3: #6b6860;
-  --sl-color-gray-4: #454240;
-  --sl-color-gray-5: #2e3230;
-  --sl-color-gray-6: #222826;
+  --sl-color-gray-2: #b0ada6;
+  --sl-color-gray-3: #908c84;
+  --sl-color-gray-4: #b0ada6;
+  --sl-color-gray-5: #3d4240;
+  --sl-color-gray-6: #2a2f2d;
   --sl-color-black: #151b19;
   --sl-color-white: #F0ECE6;
 
-  /* Hairlines */
-  --sl-color-hairline-light: #2e3836;
-  --sl-color-hairline: #263230;
-  --sl-color-hairline-shade: #1a2422;
+  --sl-color-hairline-light: #364240;
+  --sl-color-hairline: #3a4846;
+  --sl-color-hairline-shade: #2a3432;
 }
 
-/* --- Admonition / Badge Colors --- */
+/* --- Admonition Hues --- */
 :root {
   --sl-hue-green: 150;
   --sl-hue-orange: 15;
   --sl-hue-blue: 205;
   --sl-hue-red: 7;
   --sl-hue-purple: 35;
-}
-
-/* --- Content Width --- */
-:root {
   --sl-content-width: 50rem;
 }
 
-/* --- Link Styling --- */
-.sl-markdown-content a {
+/* --- Link Styling (docs pages only, not landing) --- */
+.sl-markdown-content a:not(.sl-link-button):not(.module-item) {
   text-decoration-color: var(--sl-color-accent);
   text-underline-offset: 0.15em;
 }
-.sl-markdown-content a:hover {
+.sl-markdown-content a:not(.sl-link-button):not(.module-item):hover {
   text-decoration-thickness: 2px;
+}
+
+/* Kill link styles inside custom landing sections */
+[data-has-hero] .sl-markdown-content {
+  text-decoration: none;
 }
 
 /* --- Code Block Styling --- */
@@ -107,124 +115,625 @@
   --code-background: #1e2a28;
 }
 
-/* --- Hero Section (landing page) --- */
+
+/* ============================================
+   LANDING PAGE — Splash Template
+   ============================================ */
+
+/* --- Force light mode feel on landing --- */
+.page:has(.hero) {
+  --sl-color-bg: #FAF8F2;
+}
+
+/* --- Hero --- */
 .hero {
-  text-align: center;
-  padding: 6rem 2rem 4rem;
+  text-align: left;
+  padding: 8rem 2rem 4rem;
   max-width: 64rem;
   margin: 0 auto;
 }
+
 .hero h1 {
-  font-size: var(--sl-text-5xl);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1rem;
-}
-.hero .tagline {
-  font-size: var(--sl-text-xl);
-  color: var(--sl-color-gray-3);
-  max-width: 36rem;
-  margin: 0 auto 2.5rem;
-  line-height: 1.6;
+  font-family: var(--sl-font);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--sl-color-black);
+  margin-bottom: 1.5rem;
 }
 
-/* --- Value Props Grid --- */
-.value-props {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+.hero .tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  color: var(--sl-color-gray-4);
+  max-width: 32rem;
+  margin: 0 0 3rem 0;
+  line-height: 1.5;
+}
+
+.hero .action {
+  display: inline-flex;
+}
+
+/* Hero signal motif — bands below tagline, inside the hero frame */
+.hero .copy::after {
+  content: '';
+  display: block;
+  width: min(280px, 60%);
+  height: 3px;
+  margin-top: 2.5rem;
+  background: linear-gradient(
+    to right,
+    var(--signal-blue) 0%, var(--signal-blue) 25%,
+    var(--signal-green) 25%, var(--signal-green) 50%,
+    var(--signal-gold) 50%, var(--signal-gold) 75%,
+    var(--signal-copper) 75%, var(--signal-copper) 100%
+  );
+}
+
+/* Hero layout — left-align, kill centering */
+.hero .stack {
+  align-items: flex-start !important;
+}
+.hero .copy {
+  align-items: flex-start !important;
+}
+.hero .actions {
+  justify-content: flex-start !important;
+}
+
+/* Primary CTA — dark, confident, no radius */
+.hero a.sl-link-button.primary {
+  background: var(--sl-color-black) !important;
+  color: var(--sl-color-white) !important;
+  border-radius: 0 !important;
+  font-family: var(--sl-font-mono) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem !important;
+  border: 2px solid var(--sl-color-black) !important;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-decoration: none !important;
+}
+.hero a.sl-link-button.primary:hover {
+  background: transparent !important;
+  color: var(--sl-color-black) !important;
+}
+
+/* Secondary CTA — ghost, visible on both themes */
+.hero a.sl-link-button.minimal {
+  border-radius: 0 !important;
+  font-family: var(--sl-font-mono) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem !important;
+  border: 2px solid var(--sl-color-hairline) !important;
+  color: var(--sl-color-gray-4) !important;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none !important;
+}
+.hero a.sl-link-button.minimal:hover {
+  border-color: var(--sl-color-black) !important;
+  color: var(--sl-color-black) !important;
+}
+
+/* Kill Starlight's default link-button margin */
+.hero .sl-link-button {
+  margin: 0 !important;
+}
+.hero .actions {
+  gap: 1rem !important;
+}
+
+/* ============================================
+   SECTIONS — Full-width, generous spacing
+   ============================================ */
+
+.landing-section {
+  padding: 6rem 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--sl-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--sl-color-gray-3);
+  margin-bottom: 2rem;
+}
+
+.section-headline {
+  font-family: var(--sl-font);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--sl-color-black);
+  margin-bottom: 1.5rem;
+  max-width: 36rem;
+}
+
+.section-body {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--sl-color-gray-4);
+  max-width: 36rem;
+}
+
+/* ============================================
+   SIGNAL MOTIFS — SVG dividers
+   ============================================ */
+
+.signal-divider {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  padding: 0 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  height: 3px;
+}
+
+.signal-band {
+  flex: 1;
+  height: 3px;
+}
+.signal-band.blue { background: var(--signal-blue); }
+.signal-band.green { background: var(--signal-green); }
+.signal-band.gold { background: var(--signal-gold); }
+.signal-band.copper { background: var(--signal-copper); }
+
+/* Wave motif */
+.signal-wave {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-start;
+}
+.signal-wave svg {
+  height: 48px;
+  width: auto;
+  max-width: 320px;
+}
+
+/* Pulse motif */
+.signal-pulse {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-start;
+}
+.signal-pulse svg {
+  height: 40px;
+  width: auto;
+  max-width: 280px;
+}
+
+/* Dot progression motif */
+.signal-dots {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  line-height: 0;
+}
+.signal-dots .dot-line {
+  height: 2px;
+  width: 40px;
+  flex-shrink: 0;
+}
+.signal-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   COMMANDS — Stacked, not cards
+   ============================================ */
+
+.command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
   max-width: 64rem;
   margin: 0 auto;
   padding: 2rem;
 }
-.value-prop {
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid var(--sl-color-hairline);
-  background: var(--sl-color-bg-sidebar);
-}
-.value-prop h3 {
-  font-size: var(--sl-text-lg);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-.value-prop p {
-  color: var(--sl-color-gray-3);
-  line-height: 1.6;
+
+.command-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
 }
 
-/* --- Platform Badges --- */
+.command-name {
+  font-family: var(--sl-font-mono);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--sl-color-black);
+  line-height: 1.1;
+}
+
+.command-desc {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--sl-color-gray-4);
+  padding-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .command-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* ============================================
+   PLATFORMS — Inline, minimal
+   ============================================ */
+
 .platforms {
   display: flex;
-  gap: 0.75rem;
-  justify-content: center;
+  gap: 1.5rem;
   flex-wrap: wrap;
-  padding: 2rem;
+  padding: 1rem 0 0 0;
 }
-.platform-badge {
-  padding: 0.375rem 0.875rem;
-  border-radius: 999px;
-  border: 1px solid var(--sl-color-hairline);
-  font-size: var(--sl-text-sm);
-  font-weight: 500;
+
+.platform-name {
+  font-family: var(--sl-font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+  padding: 0.5rem 0;
+  border-bottom: 2px solid var(--sl-color-hairline);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.platform-name:hover {
+  color: var(--sl-color-black);
+  border-color: var(--sl-color-black);
+}
+
+/* ============================================
+   MODULES — Varied grid, not uniform
+   ============================================ */
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 64rem;
+  margin: 0 auto;
+  border-top: 1px solid var(--sl-color-hairline);
+}
+
+.module-item {
+  padding: 2rem;
+  border-bottom: 1px solid var(--sl-color-hairline);
+  border-right: 1px solid var(--sl-color-hairline);
+}
+.module-item:nth-child(2n) {
+  border-right: none;
+}
+
+.module-label {
+  font-family: var(--sl-font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+}
+.module-label.blue {
+  color: var(--signal-blue);
+  background: rgba(91, 141, 239, 0.08);
+}
+.module-label.green {
+  color: var(--signal-green);
+  background: rgba(52, 184, 125, 0.08);
+}
+.module-label.gold {
+  color: var(--signal-gold);
+  background: rgba(212, 161, 42, 0.08);
+}
+.module-label.copper {
+  color: var(--signal-copper);
+  background: rgba(184, 117, 80, 0.08);
+}
+
+.module-name {
+  font-family: var(--sl-font);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--sl-color-black);
+  margin-bottom: 0.375rem;
+}
+
+.module-desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
   color: var(--sl-color-gray-3);
 }
 
-/* --- Modules Grid --- */
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem;
+@media (max-width: 640px) {
+  .modules-grid {
+    grid-template-columns: 1fr;
+  }
+  .module-item {
+    border-right: none;
+  }
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+
+.cta-section {
+  text-align: left;
+  padding: 6rem 2rem 8rem;
   max-width: 64rem;
   margin: 0 auto;
-  padding: 2rem;
 }
-.module-card {
-  padding: 1.25rem;
-  border-radius: 8px;
+
+.cta-section h2 {
+  font-family: var(--sl-font);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--sl-color-black);
+  margin-bottom: 1rem;
+  line-height: 1.08;
+}
+
+.cta-section .cta-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--sl-color-gray-4);
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+.cta-section pre {
+  text-align: left;
+  border-radius: 0;
+  padding: 1.5rem 2rem;
+  font-size: 0.875rem;
+  max-width: 32rem;
   border: 1px solid var(--sl-color-hairline);
-  background: var(--sl-color-bg-sidebar);
 }
-.module-card h4 {
-  font-size: var(--sl-text-base);
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.module-card p {
-  font-size: var(--sl-text-sm);
+
+/* ============================================
+   ATTRIBUTION — Monospace, minimal
+   ============================================ */
+
+.attribution {
+  font-family: var(--sl-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: var(--sl-color-gray-3);
+  padding: 4rem 2rem 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* ============================================
+   STARLIGHT OVERRIDES — Landing page only
+   ============================================ */
+
+/* Hide sidebar on splash pages */
+[data-has-hero] .right-sidebar,
+[data-has-hero] .sidebar {
+  display: none;
+}
+
+/* Full-width content area on splash */
+[data-has-hero] .main-frame {
+  max-width: 100%;
+  padding: 0;
+}
+
+[data-has-hero] main {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Break content out of Starlight's content wrapper */
+[data-has-hero] .sl-markdown-content {
+  max-width: 100%;
+  padding: 0;
+}
+
+[data-has-hero] .content-panel {
+  max-width: 100%;
+  padding: 0;
+}
+
+[data-has-hero] .sl-container {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Remove default paragraph margins inside custom sections */
+.landing-section p,
+.command-desc p,
+.section-body p,
+.module-desc p,
+.cta-sub p {
   margin: 0;
 }
 
-/* --- CTA Section --- */
-.cta-section {
-  text-align: center;
-  padding: 4rem 2rem;
-  max-width: 40rem;
-  margin: 0 auto;
+/* Fix Starlight's default code block in CTA */
+.cta-section .expressive-code {
+  max-width: 32rem;
+  margin: 0 !important;
 }
-.cta-section h2 {
-  font-size: var(--sl-text-2xl);
-  font-weight: 700;
-  margin-bottom: 1rem;
+.cta-section .expressive-code .frame {
+  border-radius: 0 !important;
+  border: 1px solid var(--sl-color-hairline) !important;
+  box-shadow: none !important;
 }
-.cta-section pre {
-  text-align: left;
-  border-radius: 8px;
-  padding: 1.25rem;
-  font-size: var(--sl-text-sm);
+/* Terminal header bar — flatten it */
+.cta-section .expressive-code .frame.is-terminal .header {
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--sl-color-hairline) !important;
+}
+/* Code background — match page tone */
+:root[data-theme='light'] .cta-section .expressive-code .frame pre {
+  background: #F0EDE6 !important;
+}
+:root[data-theme='dark'] .cta-section .expressive-code .frame pre {
+  background: #1e2a28 !important;
+}
+/* Copy button — square */
+.cta-section .expressive-code .copy button {
+  border-radius: 0 !important;
 }
 
-/* --- Section Dividers --- */
-.section {
-  padding: 4rem 0;
+/* ============================================
+   POLISH — Responsive, dark mode, transitions
+   ============================================ */
+
+/* Mobile — tighter spacing, CTA above fold */
+@media (max-width: 768px) {
+  .hero {
+    padding: 2.5rem 1.5rem 2rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+  .hero .tagline {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+  .hero .copy::after {
+    margin-top: 1.5rem;
+    width: min(200px, 50%);
+  }
+  .landing-section {
+    padding: 4rem 1.5rem;
+  }
+  .command-list {
+    padding: 1.5rem;
+    gap: 3rem;
+  }
+  .signal-divider,
+  .signal-wave,
+  .signal-pulse,
+  .signal-dots {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .cta-section {
+    padding: 4rem 1.5rem 6rem;
+  }
+  .modules-grid {
+    padding: 0 1.5rem;
+  }
 }
-.section-title {
-  text-align: center;
-  font-size: var(--sl-text-sm);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--sl-color-accent);
-  margin-bottom: 2rem;
+
+/* Dark mode — landing page text must be explicitly light */
+:root[data-theme='dark'] .hero h1,
+:root[data-theme='dark'] .section-headline,
+:root[data-theme='dark'] .command-name,
+:root[data-theme='dark'] .module-name,
+:root[data-theme='dark'] .cta-section h2 {
+  color: #F0ECE6;
+}
+:root[data-theme='dark'] .hero .tagline,
+:root[data-theme='dark'] .section-body,
+:root[data-theme='dark'] .section-body p,
+:root[data-theme='dark'] .command-desc,
+:root[data-theme='dark'] .module-desc,
+:root[data-theme='dark'] .cta-section .cta-sub {
+  color: #b0ada6;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.primary {
+  background: #F0ECE6 !important;
+  color: #1C2826 !important;
+  border-color: #F0ECE6 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.primary:hover {
+  background: transparent !important;
+  color: #F0ECE6 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.minimal {
+  color: #b0ada6 !important;
+  border-color: #3a4846 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.minimal:hover {
+  color: #F0ECE6 !important;
+  border-color: #F0ECE6 !important;
+}
+
+/* Dark mode — signal motifs need slightly higher opacity */
+:root[data-theme='dark'] .signal-wave svg path,
+:root[data-theme='dark'] .signal-pulse svg path {
+  opacity: 0.85;
+}
+
+/* Dark mode — module labels need adjusted backgrounds */
+:root[data-theme='dark'] .module-label.blue {
+  background: rgba(91, 141, 239, 0.15);
+}
+:root[data-theme='dark'] .module-label.green {
+  background: rgba(52, 184, 125, 0.15);
+}
+:root[data-theme='dark'] .module-label.gold {
+  background: rgba(212, 161, 42, 0.15);
+}
+:root[data-theme='dark'] .module-label.copper {
+  background: rgba(184, 117, 80, 0.15);
+}
+
+/* Scoped theme transitions — only elements that change on theme toggle */
+body,
+.header,
+.hero,
+.landing-section,
+.module-item,
+.module-label,
+.cta-section,
+.command-name,
+.command-desc,
+.section-headline,
+.section-label,
+.section-body,
+.platform-name,
+.attribution,
+.signal-band,
+.sl-markdown-content {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Nav bar — force warm cream on landing in light mode */
+:root[data-theme='light'] [data-has-hero] .header {
+  background: #F2EFE8;
+  border-bottom: 1px solid #e2dfd8;
 }

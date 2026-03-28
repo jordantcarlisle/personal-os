@@ -3,7 +3,7 @@ title: Personal OS
 description: An AI-powered personal operating system. Reflect, plan, track habits, and stay accountable — with an agent that compounds your context over time.
 template: splash
 hero:
-  tagline: An AI-powered operating system for your life. GTD, PARA, and Atomic Habits — integrated with your AI coding agent.
+  tagline: An AI-powered operating system for your life. GTD, PARA, and Atomic Habits — integrated with your AI agent.
   actions:
     - text: Get Started
       link: /personal-os/getting-started/what-is-this/
@@ -15,85 +15,115 @@ hero:
       variant: minimal
 ---
 
-<div class="section">
-  <div class="section-title">What You Get</div>
-  <div class="value-props">
-    <div class="value-prop">
-      <h3>Reflect & Plan</h3>
-      <p>Morning journaling, evening wins, daily sprint planning. Three rituals that compound into clarity over weeks and months.</p>
-    </div>
-    <div class="value-prop">
-      <h3>Track & Adapt</h3>
-      <p>Habits, projects, inbox, reviews — all in plain text. Your agent knows your patterns and pushes back when you overcommit.</p>
-    </div>
-    <div class="value-prop">
-      <h3>Compound Over Time</h3>
-      <p>Every reflection, decision, and lesson is preserved. The longer you run the system, the more context your agent has to help you.</p>
-    </div>
+{/* ============================================
+    SECTION: What You Get
+    ============================================ */}
+<div class="landing-section">
+  <div class="section-label">What You Get</div>
+  <div class="section-headline">Three rituals that compound into clarity.</div>
+  <div class="section-body">
+    Morning journaling, evening wins, daily sprint planning. Your agent knows your patterns, preserves every decision, and pushes back when you overcommit. The longer you run the system, the more context it has to help you.
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">The Daily Loop</div>
-  <div class="value-props">
-    <div class="value-prop">
-      <h3><code>/reflect</code></h3>
-      <p>Morning intentions, gratitude, energy check. Evening wins, lessons, habit tracking. The heartbeat of the OS.</p>
-    </div>
-    <div class="value-prop">
-      <h3><code>/triage</code></h3>
-      <p>Scan email, messages, calendar. Process inbox to zero. Surface what's urgent before you start your day.</p>
-    </div>
-    <div class="value-prop">
-      <h3><code>/plan</code></h3>
-      <p>Build today's sprint. Max 3-5 items. Timebox each one. The agent enforces a hard limit so you finish with wins.</p>
-    </div>
+{/* ============================================
+    SECTION: The Daily Loop
+    ============================================ */}
+<div class="landing-section" style="padding-bottom: 2rem;">
+  <div class="section-label">The Daily Loop</div>
+</div>
+
+<div class="command-list">
+  <div class="command-item">
+    <div class="command-name">/reflect</div>
+    <div class="command-desc">Morning intentions, gratitude, energy check. Evening wins, lessons, habit tracking. The heartbeat of the system.</div>
+  </div>
+  <div class="command-item">
+    <div class="command-name">/triage</div>
+    <div class="command-desc">Scan email, messages, calendar. Process inbox to zero. Surface what's urgent before you start your day.</div>
+  </div>
+  <div class="command-item">
+    <div class="command-name">/plan</div>
+    <div class="command-desc">Build today's sprint. Max 3-5 items. Timebox each one. The agent enforces a hard limit so you finish with wins.</div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Works With Your AI Tool</div>
+{/* --- Pulse Motif --- */}
+<div class="signal-pulse" aria-hidden="true">
+  <svg viewBox="0 0 280 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 20 H80 L95 4 L110 36 L125 12 L140 28 L155 20 H280" stroke="#34B87D" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M0 20 H80 L95 4 L110 36 L125 12 L140 28 L155 20 H280" stroke="#5B8DEF" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="4 4"/>
+  </svg>
+</div>
+
+{/* ============================================
+    SECTION: Works With Your Tool
+    ============================================ */}
+<div class="landing-section">
+  <div class="section-label">Works With Your AI Tool</div>
   <div class="platforms">
-    <span class="platform-badge">Claude Code</span>
-    <span class="platform-badge">Gemini CLI</span>
-    <span class="platform-badge">OpenAI Codex</span>
-    <span class="platform-badge">Cursor</span>
+    <span class="platform-name">Claude Code</span>
+    <span class="platform-name">Gemini CLI</span>
+    <span class="platform-name">OpenAI Codex</span>
+    <span class="platform-name">Cursor</span>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Optional Modules</div>
-  <div class="modules-grid">
-    <div class="module-card">
-      <h4>Health Data</h4>
-      <p>Wearable data, morning briefings, experiment tracking</p>
-    </div>
-    <div class="module-card">
-      <h4>Learning System</h4>
-      <p>Curriculum architecture, study sessions, spaced repetition</p>
-    </div>
-    <div class="module-card">
-      <h4>Relationships</h4>
-      <p>Contact tracking, decay monitoring, meeting prep</p>
-    </div>
-    <div class="module-card">
-      <h4>Finances</h4>
-      <p>Budget awareness, financial reviews, goal tracking</p>
-    </div>
-    <div class="module-card">
-      <h4>Brand & Content</h4>
-      <p>Voice guide, content queue, audience building</p>
-    </div>
-    <div class="module-card">
-      <h4>Career</h4>
-      <p>1:1 prep, stakeholder management, role transitions</p>
-    </div>
+{/* ============================================
+    SECTION: Optional Modules
+    ============================================ */}
+<div class="landing-section" style="padding-bottom: 2rem;">
+  <div class="section-label">Optional Modules</div>
+  <div class="section-headline">Layer on what matters to you.</div>
+</div>
+
+<div class="modules-grid">
+  <div class="module-item">
+    <div class="module-label green">Body</div>
+    <div class="module-name">Health Data</div>
+    <div class="module-desc">Wearable data, morning briefings, experiment tracking</div>
+  </div>
+  <div class="module-item">
+    <div class="module-label blue">Mind</div>
+    <div class="module-name">Learning System</div>
+    <div class="module-desc">Curriculum architecture, study sessions, spaced repetition</div>
+  </div>
+  <div class="module-item">
+    <div class="module-label gold">People</div>
+    <div class="module-name">Relationships</div>
+    <div class="module-desc">Contact tracking, decay monitoring, meeting prep</div>
+  </div>
+  <div class="module-item">
+    <div class="module-label copper">Money</div>
+    <div class="module-name">Finances</div>
+    <div class="module-desc">Budget awareness, financial reviews, goal tracking</div>
+  </div>
+  <div class="module-item">
+    <div class="module-label gold">Voice</div>
+    <div class="module-name">Brand & Content</div>
+    <div class="module-desc">Voice guide, content queue, audience building</div>
+  </div>
+  <div class="module-item">
+    <div class="module-label blue">Growth</div>
+    <div class="module-name">Career</div>
+    <div class="module-desc">1:1 prep, stakeholder management, role transitions</div>
   </div>
 </div>
 
+{/* --- Signal Bands Divider --- */}
+<div class="signal-divider" style="margin-top: 4rem;">
+  <div class="signal-band blue"></div>
+  <div class="signal-band green"></div>
+  <div class="signal-band gold"></div>
+  <div class="signal-band copper"></div>
+</div>
+
+{/* ============================================
+    CTA
+    ============================================ */}
 <div class="cta-section">
-  <h2>Ready to start?</h2>
-  <p>Clone the repo and run the onboarding command. You'll be operational in one sitting.</p>
+  <h2>Clone it. Run /onboard. Go.</h2>
+  <div class="cta-sub">You'll be operational in one sitting.</div>
 
 ```bash
 git clone https://github.com/jordantcarlisle/personal-os.git
@@ -102,3 +132,5 @@ cd personal-os
 ```
 
 </div>
+
+<div class="attribution">Jordan Carlisle &mdash; Personal OS</div>
