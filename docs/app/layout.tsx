@@ -24,6 +24,9 @@ export const metadata = {
     default: 'Personal OS',
   },
   description: 'A markdown-based personal operating system integrating PARA, GTD, and Atomic Habits.',
+  icons: {
+    icon: '/personal-os/favicon.svg',
+  },
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
