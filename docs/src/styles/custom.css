@@ -236,9 +236,25 @@
 }
 
 /* Primary CTA — dark, confident, no radius */
+:root[data-theme='light'] .hero a.sl-link-button.primary {
+  background: #1a1a18 !important;
+  color: #FAFAF7 !important;
+  border: 2px solid #1a1a18 !important;
+}
+:root[data-theme='light'] .hero a.sl-link-button.primary:hover {
+  background: transparent !important;
+  color: #1a1a18 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.primary {
+  background: #f0eee8 !important;
+  color: #171717 !important;
+  border: 2px solid #f0eee8 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.primary:hover {
+  background: transparent !important;
+  color: #f0eee8 !important;
+}
 .hero a.sl-link-button.primary {
-  background: var(--landing-heading) !important;
-  color: var(--sl-color-bg) !important;
   border-radius: 0 !important;
   font-family: var(--sl-font-mono) !important;
   font-size: 0.8rem !important;
@@ -246,16 +262,27 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 0.875rem 2rem !important;
-  border: 2px solid var(--landing-heading) !important;
   transition: background 0.2s ease, color 0.2s ease;
   text-decoration: none !important;
 }
-.hero a.sl-link-button.primary:hover {
-  background: transparent !important;
-  color: var(--landing-heading) !important;
-}
 
 /* Secondary CTA — ghost, visible on both themes */
+:root[data-theme='light'] .hero a.sl-link-button.minimal {
+  color: #62605a !important;
+  border: 2px solid #ccc9c2 !important;
+}
+:root[data-theme='light'] .hero a.sl-link-button.minimal:hover {
+  color: #1a1a18 !important;
+  border-color: #1a1a18 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.minimal {
+  color: #858380 !important;
+  border: 2px solid #383838 !important;
+}
+:root[data-theme='dark'] .hero a.sl-link-button.minimal:hover {
+  color: #f0eee8 !important;
+  border-color: #f0eee8 !important;
+}
 .hero a.sl-link-button.minimal {
   border-radius: 0 !important;
   font-family: var(--sl-font-mono) !important;
@@ -264,14 +291,8 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 0.875rem 2rem !important;
-  border: 2px solid var(--sl-color-hairline) !important;
-  color: var(--landing-muted) !important;
   transition: border-color 0.2s ease, color 0.2s ease;
   text-decoration: none !important;
-}
-.hero a.sl-link-button.minimal:hover {
-  border-color: var(--landing-heading) !important;
-  color: var(--landing-heading) !important;
 }
 
 /* Kill Starlight's default link-button margin */
