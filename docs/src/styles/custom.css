@@ -27,60 +27,60 @@
   --signal-copper: #B87550;
 }
 
-/* --- Light Mode (primary — "dawn in a field lab") --- */
+/* --- Light Mode --- */
 :root[data-theme='light'] {
   --sl-color-accent-low: #dce8f0;
-  --sl-color-accent: #4A7699;
-  --sl-color-accent-high: #2c4a60;
+  --sl-color-accent: #3a6b8a;
+  --sl-color-accent-high: #1e3d54;
 
-  --sl-color-bg: #FAF8F2;
-  --sl-color-bg-nav: #F2EFE8;
-  --sl-color-bg-sidebar: #F5F2EC;
-  --sl-color-bg-inline-code: #EDE9E0;
+  --sl-color-bg: #FAFAF7;
+  --sl-color-bg-nav: #F3F2EE;
+  --sl-color-bg-sidebar: #F5F4F0;
+  --sl-color-bg-inline-code: #ECEAE4;
 
-  --sl-color-text: #1a1816;
-  --sl-color-text-accent: #3a6585;
+  --sl-color-text: #1a1a18;
+  --sl-color-text-accent: #2c5670;
 
-  --sl-color-gray-1: #eae7e0;
-  --sl-color-gray-2: #c8c4bb;
-  --sl-color-gray-3: #918d84;
-  --sl-color-gray-4: #5e5a52;
-  --sl-color-gray-5: #3d3a34;
-  --sl-color-gray-6: #2a2824;
-  --sl-color-black: #1a1816;
-  --sl-color-white: #FAF8F2;
+  --sl-color-gray-1: #e8e6e0;
+  --sl-color-gray-2: #c4c1b8;
+  --sl-color-gray-3: #7d7a72;
+  --sl-color-gray-4: #484540;
+  --sl-color-gray-5: #333130;
+  --sl-color-gray-6: #242220;
+  --sl-color-black: #1a1a18;
+  --sl-color-white: #FAFAF7;
 
-  --sl-color-hairline-light: #e2dfd8;
-  --sl-color-hairline: #d4d0c8;
-  --sl-color-hairline-shade: #c0bcb2;
+  --sl-color-hairline-light: #e0ded8;
+  --sl-color-hairline: #ccc9c2;
+  --sl-color-hairline-shade: #b5b2aa;
 }
 
-/* --- Dark Mode (secondary — "deep forest") --- */
+/* --- Dark Mode --- */
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #1e3344;
-  --sl-color-accent: #6ba3c7;
-  --sl-color-accent-high: #b8d4e8;
+  --sl-color-accent-low: #1e2d3a;
+  --sl-color-accent: #7bb0d4;
+  --sl-color-accent-high: #c4dded;
 
-  --sl-color-bg: #1C2826;
-  --sl-color-bg-nav: #1a2523;
-  --sl-color-bg-sidebar: #1e2a28;
-  --sl-color-bg-inline-code: #243230;
+  --sl-color-bg: #171717;
+  --sl-color-bg-nav: #1c1c1c;
+  --sl-color-bg-sidebar: #1e1e1e;
+  --sl-color-bg-inline-code: #252525;
 
-  --sl-color-text: #E8E4DF;
+  --sl-color-text: #e8e6e2;
   --sl-color-text-accent: #8dbfe0;
 
-  --sl-color-gray-1: #d4d0cb;
-  --sl-color-gray-2: #b0ada6;
-  --sl-color-gray-3: #908c84;
-  --sl-color-gray-4: #b0ada6;
-  --sl-color-gray-5: #3d4240;
-  --sl-color-gray-6: #2a2f2d;
-  --sl-color-black: #151b19;
-  --sl-color-white: #F0ECE6;
+  --sl-color-gray-1: #d4d2cc;
+  --sl-color-gray-2: #a8a6a0;
+  --sl-color-gray-3: #858380;
+  --sl-color-gray-4: #a8a6a0;
+  --sl-color-gray-5: #383838;
+  --sl-color-gray-6: #272727;
+  --sl-color-black: #111111;
+  --sl-color-white: #f0eee8;
 
-  --sl-color-hairline-light: #364240;
-  --sl-color-hairline: #3a4846;
-  --sl-color-hairline-shade: #2a3432;
+  --sl-color-hairline-light: #2e2e2e;
+  --sl-color-hairline: #383838;
+  --sl-color-hairline-shade: #222222;
 }
 
 /* --- Admonition Hues --- */
@@ -89,8 +89,46 @@
   --sl-hue-orange: 15;
   --sl-hue-blue: 205;
   --sl-hue-red: 7;
-  --sl-hue-purple: 35;
+  --sl-hue-purple: 270;
   --sl-content-width: 50rem;
+}
+
+/* --- Content Page Typography --- */
+.sl-markdown-content h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.sl-markdown-content h2 {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-top: 2.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--sl-color-hairline-light);
+}
+.sl-markdown-content h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.sl-markdown-content blockquote {
+  border-left: 3px solid var(--sl-color-accent);
+  padding: 0.5rem 1.25rem;
+  margin: 1.5rem 0;
+  background: var(--sl-color-bg-inline-code);
+  font-style: italic;
+}
+.sl-markdown-content blockquote p {
+  margin: 0.5rem 0;
+}
+
+/* Tighter table styling */
+.sl-markdown-content table {
+  font-size: 0.9375rem;
+}
+.sl-markdown-content th {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* --- Link Styling (docs pages only, not landing) --- */
@@ -109,10 +147,10 @@
 
 /* --- Code Block Styling --- */
 :root[data-theme='light'] .expressive-code .frame {
-  --code-background: #F0EDE6;
+  --code-background: #ECEAE4;
 }
 :root[data-theme='dark'] .expressive-code .frame {
-  --code-background: #1e2a28;
+  --code-background: #1e1e1e;
 }
 
 
@@ -120,15 +158,15 @@
    LANDING PAGE — Splash Template
    ============================================ */
 
-/* --- Force light mode feel on landing --- */
+/* --- Force consistent bg on landing --- */
 .page:has(.hero) {
-  --sl-color-bg: #FAF8F2;
+  --sl-color-bg: var(--sl-color-bg);
 }
 
 /* --- Hero --- */
 .hero {
   text-align: left;
-  padding: 8rem 2rem 4rem;
+  padding: 5rem 2rem 3rem;
   max-width: 64rem;
   margin: 0 auto;
 }
@@ -147,7 +185,7 @@
   font-family: var(--font-serif);
   font-style: italic;
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-  color: var(--sl-color-gray-4);
+  color: var(--sl-color-gray-5);
   max-width: 32rem;
   margin: 0 0 3rem 0;
   line-height: 1.5;
@@ -236,7 +274,7 @@
    ============================================ */
 
 .landing-section {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   max-width: 64rem;
   margin: 0 auto;
 }
@@ -247,8 +285,8 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--sl-color-gray-3);
-  margin-bottom: 2rem;
+  color: var(--sl-color-gray-4);
+  margin-bottom: 1.5rem;
 }
 
 .section-headline {
@@ -265,7 +303,7 @@
 .section-body {
   font-size: 1.0625rem;
   line-height: 1.75;
-  color: var(--sl-color-gray-4);
+  color: var(--sl-color-gray-5);
   max-width: 36rem;
 }
 
@@ -274,18 +312,21 @@
    ============================================ */
 
 .signal-divider {
-  display: flex;
-  gap: 0;
-  align-items: center;
-  padding: 0 2rem;
-  max-width: 64rem;
+  display: block;
+  max-width: 60rem;
   margin: 0 auto;
+  padding: 0 2rem;
+  height: 3px;
+  line-height: 0;
+}
+.signal-divider svg {
+  display: block;
+  width: 100%;
   height: 3px;
 }
 
 .signal-band {
-  flex: 1;
-  height: 3px;
+  display: none;
 }
 .signal-band.blue { background: var(--signal-blue); }
 .signal-band.green { background: var(--signal-green); }
@@ -351,7 +392,7 @@
 .command-list {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2.5rem;
   max-width: 64rem;
   margin: 0 auto;
   padding: 2rem;
@@ -376,7 +417,7 @@
 .command-desc {
   font-size: 1.0625rem;
   line-height: 1.75;
-  color: var(--sl-color-gray-4);
+  color: var(--sl-color-gray-5);
   padding-top: 0.5rem;
 }
 
@@ -404,7 +445,7 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--sl-color-gray-3);
+  color: var(--sl-color-gray-4);
   padding: 0.5rem 0;
   border-bottom: 2px solid var(--sl-color-hairline);
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -438,7 +479,7 @@
 
 .module-label {
   font-family: var(--sl-font-mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -475,7 +516,7 @@
 .module-desc {
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: var(--sl-color-gray-3);
+  color: var(--sl-color-gray-4);
 }
 
 @media (max-width: 640px) {
@@ -493,7 +534,7 @@
 
 .cta-section {
   text-align: left;
-  padding: 6rem 2rem 8rem;
+  padding: 4rem 2rem 6rem;
   max-width: 64rem;
   margin: 0 auto;
 }
@@ -512,7 +553,7 @@
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.125rem;
-  color: var(--sl-color-gray-4);
+  color: var(--sl-color-gray-5);
   margin-bottom: 2.5rem;
   line-height: 1.5;
 }
@@ -522,7 +563,7 @@
   border-radius: 0;
   padding: 1.5rem 2rem;
   font-size: 0.875rem;
-  max-width: 32rem;
+  max-width: 100%;
   border: 1px solid var(--sl-color-hairline);
 }
 
@@ -537,7 +578,7 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--sl-color-gray-3);
-  padding: 4rem 2rem 2rem;
+  padding: 2rem 2rem 2rem;
   max-width: 64rem;
   margin: 0 auto;
 }
@@ -590,7 +631,7 @@
 
 /* Fix Starlight's default code block in CTA */
 .cta-section .expressive-code {
-  max-width: 32rem;
+  max-width: 100%;
   margin: 0 !important;
 }
 .cta-section .expressive-code .frame {
@@ -605,10 +646,10 @@
 }
 /* Code background — match page tone */
 :root[data-theme='light'] .cta-section .expressive-code .frame pre {
-  background: #F0EDE6 !important;
+  background: #ECEAE4 !important;
 }
 :root[data-theme='dark'] .cta-section .expressive-code .frame pre {
-  background: #1e2a28 !important;
+  background: #1e1e1e !important;
 }
 /* Copy button — square */
 .cta-section .expressive-code .copy button {
@@ -619,10 +660,10 @@
    POLISH — Responsive, dark mode, transitions
    ============================================ */
 
-/* Mobile — tighter spacing, CTA above fold */
+/* Mobile — tighter spacing */
 @media (max-width: 768px) {
   .hero {
-    padding: 2.5rem 1.5rem 2rem;
+    padding: 3rem 1.5rem 2rem;
   }
   .hero h1 {
     font-size: clamp(2.25rem, 10vw, 3.5rem);
@@ -637,11 +678,11 @@
     width: min(200px, 50%);
   }
   .landing-section {
-    padding: 4rem 1.5rem;
+    padding: 3rem 1.5rem;
   }
   .command-list {
     padding: 1.5rem;
-    gap: 3rem;
+    gap: 2rem;
   }
   .signal-divider,
   .signal-wave,
@@ -651,20 +692,20 @@
     padding-right: 1.5rem;
   }
   .cta-section {
-    padding: 4rem 1.5rem 6rem;
+    padding: 3rem 1.5rem 4rem;
   }
   .modules-grid {
     padding: 0 1.5rem;
   }
 }
 
-/* Dark mode — landing page text must be explicitly light */
+/* Dark mode — landing page text */
 :root[data-theme='dark'] .hero h1,
 :root[data-theme='dark'] .section-headline,
 :root[data-theme='dark'] .command-name,
 :root[data-theme='dark'] .module-name,
 :root[data-theme='dark'] .cta-section h2 {
-  color: #F0ECE6;
+  color: #f0eee8;
 }
 :root[data-theme='dark'] .hero .tagline,
 :root[data-theme='dark'] .section-body,
@@ -675,41 +716,41 @@
   color: #b0ada6;
 }
 :root[data-theme='dark'] .hero a.sl-link-button.primary {
-  background: #F0ECE6 !important;
-  color: #1C2826 !important;
-  border-color: #F0ECE6 !important;
+  background: #f0eee8 !important;
+  color: #171717 !important;
+  border-color: #f0eee8 !important;
 }
 :root[data-theme='dark'] .hero a.sl-link-button.primary:hover {
   background: transparent !important;
-  color: #F0ECE6 !important;
+  color: #f0eee8 !important;
 }
 :root[data-theme='dark'] .hero a.sl-link-button.minimal {
-  color: #b0ada6 !important;
-  border-color: #3a4846 !important;
+  color: #a8a6a0 !important;
+  border-color: #383838 !important;
 }
 :root[data-theme='dark'] .hero a.sl-link-button.minimal:hover {
-  color: #F0ECE6 !important;
-  border-color: #F0ECE6 !important;
+  color: #f0eee8 !important;
+  border-color: #f0eee8 !important;
 }
 
-/* Dark mode — signal motifs need slightly higher opacity */
+/* Dark mode — signal motifs need higher opacity on dark bg */
 :root[data-theme='dark'] .signal-wave svg path,
 :root[data-theme='dark'] .signal-pulse svg path {
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
-/* Dark mode — module labels need adjusted backgrounds */
+/* Dark mode — module labels need stronger backgrounds */
 :root[data-theme='dark'] .module-label.blue {
-  background: rgba(91, 141, 239, 0.15);
+  background: rgba(91, 141, 239, 0.18);
 }
 :root[data-theme='dark'] .module-label.green {
-  background: rgba(52, 184, 125, 0.15);
+  background: rgba(52, 184, 125, 0.18);
 }
 :root[data-theme='dark'] .module-label.gold {
-  background: rgba(212, 161, 42, 0.15);
+  background: rgba(212, 161, 42, 0.18);
 }
 :root[data-theme='dark'] .module-label.copper {
-  background: rgba(184, 117, 80, 0.15);
+  background: rgba(184, 117, 80, 0.18);
 }
 
 /* Scoped theme transitions — only elements that change on theme toggle */
@@ -738,8 +779,8 @@ body,
   font-weight: 700 !important;
 }
 
-/* Nav bar — force warm cream on landing in light mode */
+/* Nav bar — match landing bg in light mode */
 :root[data-theme='light'] [data-has-hero] .header {
-  background: #F2EFE8;
-  border-bottom: 1px solid #e2dfd8;
+  background: var(--sl-color-bg-nav);
+  border-bottom: 1px solid var(--sl-color-hairline-light);
 }

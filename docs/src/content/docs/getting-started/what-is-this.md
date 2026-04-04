@@ -36,7 +36,7 @@ Personal OS draws from four decades of productivity research, integrated into a 
 
 **Atomic Habits (James Clear)** powers the identity layer. Your `05-habits/identity.md` file doesn't track what you do — it tracks who you're becoming. Each habit is anchored to an identity statement written in the present tense. You're not trying to read more; you are someone who reads daily. The agent reinforces this framing during every reflection session.
 
-**The 12 Week Year (Brian Moran)** sets the planning cadence. Instead of annual goals that lose urgency by February, you operate on 12-week cycles. Each cycle has 3-5 specific objectives. The agent holds you accountable to weekly progress, not just end-state outcomes.
+**OKRs + The 12 Week Year** set the planning cadence. Instead of annual goals that lose urgency by February, you operate on 13-week cycles using Objectives and Key Results — qualitative goals paired with measurable outcomes. Each cycle has 3-5 objectives with concrete key results, scored honestly at the end. The 12 Week Year (Brian Moran) provides the urgency of a short cycle; OKRs provide the structure for what "success" actually means. The agent holds you accountable to weekly progress against your key results, not just end-state hopes.
 
 ## Who It's For
 

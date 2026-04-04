@@ -132,14 +132,16 @@ Review each area in `02-areas/`:
 - Are there any areas where neglect is starting to create problems?
 - Are there any areas that should be promoted to projects for focused attention?
 
-**4. Goals Recalibration**
+**4. OKR Scoring and Recalibration**
 
-Review your quarterly goals (set at the start of the quarter):
-- What was accomplished?
-- What wasn't—and should it carry forward, or be dropped?
-- What should the next quarter's goals be?
+This is where you score the quarter's [OKRs](/core-framework/okrs/) — the Objectives and Key Results you set 13 weeks ago:
 
-Good quarterly goals are specific, outcomes-based, and few. Three to five goals is a quarter. Ten goals is a wish list.
+- Score each objective 1-10 based on key result achievement
+- For objectives scoring below 5: was the goal wrong, the key results unrealistic, or did execution break down?
+- For objectives scoring above 8: were you ambitious enough?
+- Decide what carries forward, what gets dropped, and what the next quarter's OKRs should be
+
+The agent walks you through this scoring in Part 1 of the review template. See [OKRs](/core-framework/okrs/) for how to write strong objectives and key results for the next cycle.
 
 **5. Identity and Systems Review**
 
@@ -154,8 +156,9 @@ The quarterly review is one of the few times you work *on* the system rather tha
 
 The output of the quarterly review should be:
 - A clean archive of completed or killed projects
-- Clear quarterly goals written to `00-cockpit/quarterly-review.md`
-- Updated dashboard for Monday
+- Scored OKRs for the quarter that just ended
+- Clear OKRs for the next 13-week cycle, written to `00-cockpit/quarterly-review.md`
+- Updated dashboard with new objectives for Monday
 - Any system changes captured in a changelog or note
 
 ## Making Reviews Happen
