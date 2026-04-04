@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
 import { Inter, JetBrains_Mono } from 'next/font/google'
-import { Layout } from 'nextra-theme-docs'
 import { Head } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
 import 'nextra-theme-docs/style.css'
 import './global.css'
 
@@ -29,9 +27,7 @@ export const metadata = {
   },
 }
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
-  const pageMap = await getPageMap()
-
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
@@ -40,13 +36,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     >
       <Head />
       <body>
-        <Layout
-          pageMap={pageMap}
-          docsRepositoryBase="https://github.com/jordancarlisle/personal-os"
-          sidebar={{ defaultMenuCollapseLevel: 1 }}
-        >
-          {children}
-        </Layout>
+        {children}
       </body>
     </html>
   )

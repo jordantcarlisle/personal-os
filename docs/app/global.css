@@ -1,122 +1,760 @@
 @import "tailwindcss";
 
-/* ============================================
-   Personal OS — Custom Theme
-   ============================================ */
+/* ============================================================
+   Personal OS — Design System
+   ============================================================
+   A complete CSS design overhaul for the Nextra 4 docs site.
+   Only this file is modified. All selectors target real Nextra
+   DOM classes confirmed from nextra-theme-docs source.
+   ============================================================ */
 
-/*
- * Core CSS variables that nextra-theme-docs derives its palette from.
- * --nextra-bg: space-separated RGB triplet (used as rgb(var(--nextra-bg)))
- * --nextra-primary-{hue,saturation,lightness}: compose hsl() primary colors
- * --nextra-content-width: max-width of the main content column
- *
- * The primary scale is computed as:
- *   primary-100 = hue sat (lightness + 49%)
- *   primary-600 = hue sat lightness          ← the "base" anchor
- *   primary-800 = hue sat (lightness - 13%)
- */
+
+/* ------------------------------------------------------------
+   1. DESIGN TOKENS
+   ------------------------------------------------------------ */
 
 :root {
-  /* Warm slate-blue — readable, not electric */
+  /* --- Primary palette: warm slate-blue --- */
   --nextra-primary-hue: 205deg;
-  --nextra-primary-saturation: 38%;
-  --nextra-primary-lightness: 38%;
+  --nextra-primary-saturation: 42%;
+  --nextra-primary-lightness: 36%;
 
-  /* Content column width */
+  /* --- Content column --- */
   --nextra-content-width: 52rem;
 
-  /* Light mode background: warm off-white */
+  /* --- Light mode background: warm off-white --- */
   --nextra-bg: 250 250 247;
+
+  /* --- Brand custom colors (used in overrides below) --- */
+  --color-accent:       hsl(205deg 42% 36%);      /* slate-blue primary */
+  --color-accent-light: hsl(205deg 42% 92%);      /* primary-100 equivalent */
+  --color-accent-dark:  hsl(205deg 42% 23%);      /* primary-800 equivalent */
+
+  --color-signal-blue:   #5B8DEF;
+  --color-signal-green:  #34B87D;
+  --color-signal-gold:   #D4A12A;
+  --color-signal-copper: #B87550;
+
+  /* --- Light mode text & border scale --- */
+  --color-text-primary:   #1a1a18;
+  --color-text-secondary: #484540;
+  --color-text-muted:     #7d7a72;
+  --color-border:         #e0ded8;
+  --color-border-subtle:  #eeece8;
+  --color-sidebar-bg:     #f5f5f2;   /* slightly differentiated from page bg */
+  --color-code-bg:        #f0f0eb;   /* warm tint code bg in light mode */
+
+  /* --- Transitions --- */
+  --transition-color: color 150ms ease, background-color 150ms ease,
+                      border-color 150ms ease, opacity 150ms ease;
 }
 
-/* Dark mode — nextra adds class="dark" to <html> */
 html.dark {
-  /* Dark background: near-black with a slight warm tint */
+  /* --- Dark mode: true neutral dark --- */
   --nextra-bg: 22 22 22;
+  --nextra-primary-lightness: 60%;
 
-  /* Slightly brighter primary so it reads on dark bg */
-  --nextra-primary-lightness: 62%;
+  --color-text-primary:   #e8e6e2;
+  --color-text-secondary: #b0ada6;
+  --color-text-muted:     #6e6b64;
+  --color-border:         #2e2e2e;
+  --color-border-subtle:  #252525;
+  --color-sidebar-bg:     #1a1a1a;
+  --color-code-bg:        #1e1e1e;
+
+  --color-accent:       hsl(205deg 42% 60%);
+  --color-accent-light: hsl(205deg 42% 15%);
+  --color-accent-dark:  hsl(205deg 42% 75%);
 }
 
-/* ============================================
-   Typography
-   ============================================ */
-
-article.nextra-body-typesetting-article h1 {
-  font-weight: 800;
-  letter-spacing: -0.02em;
+/* Global smooth transitions for theme switching */
+*,
+*::before,
+*::after {
+  transition: background-color 200ms ease, border-color 200ms ease;
 }
 
-article.nextra-body-typesetting-article h2 {
-  font-weight: 700;
-  letter-spacing: -0.015em;
+/* Don't animate layout-impacting properties */
+html,
+body,
+nav,
+aside {
+  transition: background-color 200ms ease;
 }
 
-/* Default content: nextra uses article.nextra-body-typesetting-article.
-   Target headings that appear outside that article wrapper too
-   (e.g. default layout pages). */
+
+/* ------------------------------------------------------------
+   2. BASE TYPOGRAPHY
+   ------------------------------------------------------------ */
+
+html {
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Apply Inter variable font as body font */
+body {
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  color: var(--color-text-primary);
+}
+
+/* Mono font for code */
+code, kbd, samp, pre {
+  font-family: var(--font-jetbrains-mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
+               Consolas, "Liberation Mono", "Courier New", monospace);
+}
+
+
+/* ------------------------------------------------------------
+   3. HEADINGS
+   ------------------------------------------------------------ */
+
+/* H1 — page title: heavy, tight, commanding */
+.x\:text-slate-700,
+article h1,
 .nextra-content h1,
 main h1 {
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1.18;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
 }
 
+/* H2 — section headers: strong with a subtle underline accent */
+article h2,
 .nextra-content h2,
 main h2 {
   font-weight: 700;
   letter-spacing: -0.015em;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid var(--color-border);
+  color: var(--color-text-primary);
 }
 
+/* H3 — sub-sections */
+article h3,
 .nextra-content h3,
 main h3 {
   font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
 }
 
-/* Slightly looser line-height for body paragraphs */
-article.nextra-body-typesetting-article p {
+/* H4+ */
+article h4,
+.nextra-content h4,
+main h4 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-text-primary);
+}
+
+/* Body paragraphs */
+article p,
+.nextra-content p,
+main p {
   line-height: 1.78;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
 }
 
-/* ============================================
-   Sidebar — active item accent
-   ============================================ */
+/* Nextra uses these text-slate-700 / dark:text-slate-200 classes on the
+   content wrapper — bump them to our design token colors */
+.x\:text-slate-700 {
+  color: var(--color-text-secondary) !important;
+}
+html.dark .x\:dark\:text-slate-200 {
+  color: var(--color-text-primary) !important;
+}
 
-/*
- * nextra-theme-docs applies active state as Tailwind utility classes:
- *   x:bg-primary-100  x:font-semibold  x:text-primary-800
- * These resolve via --x-color-primary-{100,800} which are computed from
- * the --nextra-primary-* variables we set above, so the brand color
- * automatically flows into the active sidebar item.
- *
- * We add a left border accent on top of that to make it pop.
- */
+
+/* ------------------------------------------------------------
+   4. LINKS
+   ------------------------------------------------------------ */
+
+article a,
+.nextra-content a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: var(--transition-color);
+}
+
+article a:hover,
+.nextra-content a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+
+/* ------------------------------------------------------------
+   5. BODY LISTS
+   ------------------------------------------------------------ */
+
+article ul,
+.nextra-content ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+
+article ol,
+.nextra-content ol {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+
+article li,
+.nextra-content li {
+  margin-block: 0.35em;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+article li + li,
+.nextra-content li + li {
+  margin-top: 0.35em;
+}
+
+
+/* ------------------------------------------------------------
+   6. HORIZONTAL RULES
+   ------------------------------------------------------------ */
+
+article hr,
+.nextra-content hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-block: 2rem;
+  opacity: 0.7;
+}
+
+
+/* ------------------------------------------------------------
+   7. BLOCKQUOTES
+   ------------------------------------------------------------ */
+
+.nextra-content blockquote,
+article blockquote {
+  border-radius: 0;
+  border-width: 0;
+  border-left: 3px solid var(--color-accent);
+  background-color: var(--color-accent-light);
+  font-style: italic;
+  padding: 0.75rem 1rem;
+  margin-block: 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+html.dark .nextra-content blockquote,
+html.dark article blockquote {
+  background-color: var(--color-accent-light);
+  border-left-color: var(--color-accent);
+}
+
+.nextra-content blockquote p,
+article blockquote p {
+  margin: 0;
+  color: inherit;
+}
+
+
+/* ------------------------------------------------------------
+   8. TABLES
+   ------------------------------------------------------------ */
+
+article table,
+.nextra-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-block: 1.5rem;
+}
+
+article thead th,
+.nextra-content thead th {
+  background-color: var(--color-border-subtle);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+html.dark article thead th,
+html.dark .nextra-content thead th {
+  background-color: #242424;
+}
+
+article td,
+.nextra-content td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  vertical-align: top;
+}
+
+article tr:last-child td,
+.nextra-content tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ------------------------------------------------------------
+   9. INLINE CODE
+   ------------------------------------------------------------ */
+
+/* Nextra renders inline code as: code.nextra-code (not in pre) */
+:not(pre) > code.nextra-code:not([class*='twoslash-']) {
+  font-size: 0.875em;
+  font-family: var(--font-jetbrains-mono, ui-monospace, Menlo, monospace);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-code-bg);
+  color: var(--color-text-primary);
+  font-style: normal;
+}
+
+html.dark :not(pre) > code.nextra-code:not([class*='twoslash-']) {
+  background-color: #252525;
+  border-color: #3a3a3a;
+  color: var(--color-text-primary);
+}
+
+
+/* ------------------------------------------------------------
+   10. CODE BLOCKS (PRE)
+   ------------------------------------------------------------ */
+
+/* The outer <pre> wrapper in Nextra 4 */
+article pre,
+.nextra-content pre {
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+  margin-block: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  overflow-x: auto;
+}
+
+/* Override shiki light background with our warm code bg */
+.nextra-code span {
+  background-color: var(--shiki-light-bg, var(--color-code-bg));
+}
+
+html.dark .nextra-code span {
+  background-color: var(--shiki-dark-bg, var(--color-code-bg));
+}
+
+/* Pre block background */
+pre:has(code.nextra-code) {
+  background-color: var(--color-code-bg);
+}
+
+html.dark pre:has(code.nextra-code) {
+  background-color: var(--color-code-bg);
+  border-color: #2e2e2e;
+}
+
+/* Copy button */
+button[class*="nextra-copy"] {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+pre:hover button[class*="nextra-copy"] {
+  opacity: 1;
+}
+
+
+/* ------------------------------------------------------------
+   11. NAVBAR
+   ------------------------------------------------------------ */
+
+.nextra-navbar {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Navbar blur backdrop */
+.nextra-navbar-blur {
+  border-color: var(--color-border) !important;
+}
+
+html.dark .nextra-navbar-blur {
+  border-color: var(--color-border) !important;
+}
+
+/* Nextra border utility — override with our color */
+.nextra-border {
+  border-color: var(--color-border) !important;
+}
+
+html.dark .nextra-border {
+  border-color: var(--color-border) !important;
+}
+
+
+/* ------------------------------------------------------------
+   12. SIDEBAR
+   ------------------------------------------------------------ */
+
+/* Sidebar container */
+.nextra-sidebar {
+  background-color: var(--color-sidebar-bg);
+  border-right: 1px solid var(--color-border);
+  width: 272px;
+}
+
+html.dark .nextra-sidebar {
+  background-color: var(--color-sidebar-bg);
+  border-right-color: var(--color-border);
+}
+
+/* Scrollbar */
+.nextra-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.nextra-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.nextra-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nextra-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 2px;
+}
+
+/* ---- Sidebar link items ---- */
+
+/* All sidebar links get our font and hover */
+.x\:flex.x\:rounded.x\:px-2.x\:py-1\.5.x\:text-sm.x\:transition-colors {
+  font-size: 0.875rem;
+  border-radius: 4px;
+  transition: var(--transition-color);
+}
+
+/* Inactive links */
+.x\:text-gray-600 {
+  color: var(--color-text-secondary) !important;
+}
+
+html.dark .x\:dark\:text-neutral-400 {
+  color: var(--color-text-muted) !important;
+}
+
+/* Hover state — slightly stronger than Nextra default */
+.x\:hover\:bg-gray-100:hover,
+[class*="x:hover:bg-gray-100"]:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: var(--color-text-primary) !important;
+}
+
+html.dark .x\:dark\:hover\:bg-primary-100\/5:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ---- Active item ---- */
+
+/* Active link: stronger background + bolder left border */
 .x\:bg-primary-100 {
-  border-left: 3px solid hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) var(--nextra-primary-lightness));
-  padding-left: calc(0.5rem - 3px); /* compensate so text stays aligned */
+  background-color: var(--color-accent-light) !important;
+  border-left: 3px solid var(--color-accent) !important;
+  padding-left: calc(0.5rem - 3px) !important;
+  font-weight: 600;
 }
 
 html.dark .x\:dark\:bg-primary-400\/10 {
-  border-left: 3px solid hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) var(--nextra-primary-lightness));
-  padding-left: calc(0.5rem - 3px);
+  background-color: color-mix(in srgb, var(--color-accent) 14%, transparent) !important;
+  border-left: 3px solid var(--color-accent) !important;
+  padding-left: calc(0.5rem - 3px) !important;
 }
 
-/* ============================================
-   Callout — clean left-border style
-   ============================================ */
+/* Active text color */
+.x\:text-primary-800 {
+  color: var(--color-accent-dark) !important;
+}
+
+html.dark .x\:dark\:text-primary-600 {
+  color: var(--color-accent) !important;
+}
+
+/* ---- Separator (section headers) ---- */
 
 /*
- * nextra renders callouts as <div class="x:border x:rounded-md ...">
- * There is no dedicated "nextra-callout" class in v4; the element is
- * identified by its role and surrounding structure. We target the
- * blockquote that nextra-theme-docs generates for > [!NOTE] etc.
+ * Nextra renders separators as <li> with class:
+ *   x:not-first:mt-5 x:mb-2 x:px-2 x:py-1.5 x:text-sm x:font-semibold
+ *   x:text-gray-900 x:dark:text-gray-100
+ * We target by the text-gray-900 class combination.
  */
-.nextra-content blockquote,
-article.nextra-body-typesetting-article blockquote {
-  border-radius: 0;
+.x\:text-gray-900 {
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--color-text-muted) !important;
+  margin-top: 1.25rem !important;
+  padding-top: 0.75rem !important;
+  border-top: 1px solid var(--color-border-subtle) !important;
+}
+
+html.dark .x\:dark\:text-gray-100 {
+  color: var(--color-text-muted) !important;
+}
+
+/* ---- Folder/collapse chevron ---- */
+
+/* Arrow icon in folder items — make it more visible */
+.x\:rounded-sm.x\:p-0\.5 {
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* ---- Vertical border (nested items) ---- */
+.x\:before\:bg-gray-200 {
+  /* The ::before line on nested menus */
+}
+
+.x\:before\:bg-gray-200::before {
+  background-color: var(--color-border) !important;
+}
+
+html.dark .x\:dark\:before\:bg-neutral-800::before {
+  background-color: var(--color-border) !important;
+}
+
+/* Sidebar footer */
+.nextra-sidebar-footer {
+  border-top-color: var(--color-border) !important;
+}
+
+
+/* ------------------------------------------------------------
+   13. TABLE OF CONTENTS (right sidebar)
+   ------------------------------------------------------------ */
+
+/* TOC container */
+nav.nextra-toc {
+  font-size: 0.8125rem;
+}
+
+/* TOC links */
+nav.nextra-toc a {
+  color: var(--color-text-muted);
+  transition: var(--transition-color);
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+nav.nextra-toc a:hover {
+  color: var(--color-text-primary);
+}
+
+/* TOC active link — Nextra uses aria-current */
+nav.nextra-toc a[aria-current] {
+  color: var(--color-accent) !important;
+  font-weight: 500;
+}
+
+/* TOC heading label */
+nav.nextra-toc p {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+
+/* ------------------------------------------------------------
+   14. BREADCRUMB
+   ------------------------------------------------------------ */
+
+.nextra-breadcrumb {
+  color: var(--color-text-muted) !important;
+  font-size: 0.8125rem;
+}
+
+.nextra-breadcrumb a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.nextra-breadcrumb a:hover {
+  color: var(--color-text-secondary);
+}
+
+/* Active (last) breadcrumb item */
+.nextra-breadcrumb span[aria-current] {
+  color: var(--color-text-secondary);
+}
+
+
+/* ------------------------------------------------------------
+   15. SEARCH
+   ------------------------------------------------------------ */
+
+/* Search input — match theme */
+input[type="search"],
+input[role="searchbox"] {
+  background-color: rgb(var(--nextra-bg)) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 6px !important;
+  color: var(--color-text-primary) !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+input[type="search"]:focus,
+input[role="searchbox"]:focus {
+  border-color: var(--color-accent) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 15%, transparent) !important;
+}
+
+
+/* ------------------------------------------------------------
+   16. FOCUS STYLES (ACCESSIBILITY)
+   ------------------------------------------------------------ */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Nextra's own focus utility — keep consistent */
+.x\:focus-visible\:nextra-focus:focus-visible {
+  --tw-ring-color: var(--color-accent) !important;
+}
+
+
+/* ------------------------------------------------------------
+   17. CALLOUT COMPONENTS
+   ------------------------------------------------------------ */
+
+/*
+ * Nextra 4 renders callouts (Note/Warning/etc.) as bordered divs.
+ * We style blockquotes as the fallback callout, plus target
+ * the common callout container pattern.
+ */
+
+/* Callout container — Nextra uses role="alert" or data-callout */
+[data-callout] {
+  border-radius: 3px;
   border-left-width: 3px;
-  border-top-width: 0;
-  border-right-width: 0;
-  border-bottom-width: 0;
-  font-style: italic;
-  padding-left: 1rem;
+  padding: 0.875rem 1rem;
+  margin-block: 1.25rem;
+}
+
+
+/* ------------------------------------------------------------
+   18. NAVIGATION PREV/NEXT
+   ------------------------------------------------------------ */
+
+/* The prev/next page nav at bottom of content */
+.x\:flex.x\:flex-wrap.x\:justify-between {
+  border-top: 1px solid var(--color-border);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+}
+
+
+/* ------------------------------------------------------------
+   19. FOOTER
+   ------------------------------------------------------------ */
+
+footer.x\:text-gray-600 {
+  color: var(--color-text-muted) !important;
+  border-top: 1px solid var(--color-border);
+}
+
+
+/* ------------------------------------------------------------
+   20. THEME TOGGLE & MISC CONTROLS
+   ------------------------------------------------------------ */
+
+/* Theme toggle button */
+button[title="Toggle theme"] {
+  border-radius: 6px;
+  transition: background-color 150ms ease;
+}
+
+button[title="Toggle theme"]:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+html.dark button[title="Toggle theme"]:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+
+/* ------------------------------------------------------------
+   21. NEXTRA CARDS (if used)
+   ------------------------------------------------------------ */
+
+.nextra-card {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 6px !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease !important;
+}
+
+.nextra-card:hover {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--color-accent) 12%, transparent) !important;
+}
+
+
+/* ------------------------------------------------------------
+   22. STEP COMPONENT
+   ------------------------------------------------------------ */
+
+.nextra-steps {
+  counter-reset: step;
+}
+
+.nextra-steps h3::before {
+  background-color: var(--color-accent-light) !important;
+  color: var(--color-accent-dark) !important;
+  border-color: rgb(var(--nextra-bg)) !important;
+}
+
+html.dark .nextra-steps h3::before {
+  background-color: var(--color-accent-light) !important;
+  color: var(--color-accent) !important;
+}
+
+
+/* ------------------------------------------------------------
+   23. MOTION PREFERENCES
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
