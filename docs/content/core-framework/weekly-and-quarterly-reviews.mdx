@@ -3,6 +3,8 @@ title: Weekly and Quarterly Reviews
 description: The most important rituals in Personal OS—how weekly reviews keep the system trustworthy and quarterly reviews keep you aimed at the right targets.
 ---
 
+import { Callout, Steps } from 'nextra/components'
+
 If you only implement one part of Personal OS, make it the weekly review.
 
 Every other component of the system—PARA organization, GTD capture, identity-based habits, daily planning—degrades without regular review. Projects accumulate stale next actions. The inbox fills with unprocessed items. Waiting For items age past the point where follow-up feels natural. The dashboard diverges from reality. Within two weeks without a review, the system stops being trustworthy. Once that happens, you stop using it.
@@ -21,7 +23,9 @@ A system you can trust is one you'll actually use. A system you don't trust beco
 
 ### The Review Structure
 
-**1. Clear the Decks**
+<Steps>
+
+### Clear the Decks
 
 Before processing anything, close loose ends:
 - Capture anything still rattling around in your head to the inbox
@@ -30,7 +34,7 @@ Before processing anything, close loose ends:
 
 The goal is to start the review with a clean cognitive slate.
 
-**2. Process Inbox to Zero**
+### Process Inbox to Zero
 
 Every item in `00-cockpit/inbox.md` gets a decision:
 
@@ -43,7 +47,7 @@ Every item in `00-cockpit/inbox.md` gets a decision:
 
 Zero doesn't mean everything is done—it means every item has been decided. A properly processed inbox item is either gone, delegated, or filed somewhere actionable.
 
-**3. Review Active Projects**
+### Review Active Projects
 
 The agent scans `01-projects/` and checks each project folder. For each project:
 
@@ -54,7 +58,7 @@ The agent scans `01-projects/` and checks each project folder. For each project:
 
 A project without a clear next action is the single most common reason work stalls. The weekly review exists partly to catch this.
 
-**4. Audit Waiting For**
+### Audit Waiting For
 
 Review every item in the Waiting For list on `00-cockpit/dashboard.md`:
 
@@ -64,7 +68,7 @@ Review every item in the Waiting For list on `00-cockpit/dashboard.md`:
 
 A Waiting For item older than two weeks without a check-in is a system failure. Either you didn't follow up, or the item is no longer relevant—either way, it needs a decision.
 
-**5. Review Habits**
+### Review Habits
 
 The agent pulls the current week's habit tracker and surfaces the data:
 
@@ -75,7 +79,7 @@ The agent pulls the current week's habit tracker and surfaces the data:
 
 This isn't a performance review—it's calibration. If a habit is consistently missed, the question isn't "why didn't you do this?" but "is this habit scheduled at the right time, in the right context, in the right form?"
 
-**6. Calendar Review**
+### Calendar Review
 
 Scan the upcoming week:
 - What's already committed?
@@ -85,17 +89,21 @@ Scan the upcoming week:
 
 The agent helps identify where to place sprint items given the calendar reality. This is where the Top 3 for the coming week emerge.
 
-**7. Set Next Week's Priorities**
+### Set Next Week's Priorities
 
 Close the review by setting the three most important outcomes for the coming week. Not a task list—three outcomes. Write them to the weekly review log and to `00-cockpit/dashboard.md`.
 
+</Steps>
+
 ### Common Failure Modes
 
-**The review that never finishes.** Getting pulled into doing tasks during the review instead of just reviewing them. The review is a meta-process—work on decisions, not work items. Flag things, process them; do them later.
+<Callout type="warning">
+**The review that never finishes.** Getting pulled into doing tasks during the review instead of just reviewing them. The review is a meta-process — work on decisions, not work items. Flag things, process them; do them later.
 
 **The review that skips projects.** Scanning only the inbox and calling it done. The project review is the most important step. An inbox at zero with stale projects is false clarity.
 
-**The review that happens monthly.** Bi-weekly reviews are a hard floor. Monthly gaps are too long—the system drifts too far from reality before it gets recalibrated.
+**The review that happens monthly.** Bi-weekly reviews are a hard floor. Monthly gaps are too long — the system drifts too far from reality before it gets recalibrated.
+</Callout>
 
 ## The Quarterly Review
 

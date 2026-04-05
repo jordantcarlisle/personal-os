@@ -3,6 +3,8 @@ title: Your First Day
 description: Walk through a complete first day with Personal OS — morning reflection, inbox triage, daily planning, the work itself, and evening review.
 ---
 
+import { Callout, Steps } from 'nextra/components'
+
 The system has three daily rituals: reflect, triage, and plan. Each one is a command. Each one has a clear job. Together they take 30-40 minutes across the day and give you a structured context for everything in between.
 
 This page walks through what a first day actually looks like — realistic terminal dialogue, what the agent does at each step, and what you should expect.
@@ -25,6 +27,8 @@ Evening (10-15 min)
 That's it. The rituals bookend the day. Everything else is execution.
 
 ---
+
+<Steps>
 
 ## Morning: /reflect
 
@@ -184,6 +188,8 @@ Agent: Done. Committed sprint:
 
 The agent enforced the constraint. You tried to commit to more than you had time for, and it caught it before you committed to it. This is the /plan command's core job.
 
+</Steps>
+
 ---
 
 ## During the Day: /capture
@@ -208,7 +214,9 @@ Agent: Captured to inbox.
        Back to work.
 ```
 
-That's it. Two seconds, then you're back in the flow. The item is in your inbox, not in your head.
+<Callout type="info">
+Two seconds, then you're back in the flow. The item is in your inbox, not in your head. Never let a stray thought break your concentration — `/capture` exists precisely so you don't have to.
+</Callout>
 
 ---
 

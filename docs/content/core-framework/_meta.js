@@ -5,5 +5,6 @@ export default {
   okrs: 'OKRs',
   'identity-and-habits': 'Identity & Habits',
   'getting-things-done': 'Getting Things Done',
+  'mental-models': 'Mental Models',
   'the-para-method': 'The PARA Method',
 }

@@ -2,8 +2,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#161616] text-[#1a1a18] dark:text-[#e8e6e2]">
 
-      {/* Accent bar */}
-      <div className="flex h-[4px] w-full">
+      {/* Accent bar — 5px for more presence */}
+      <div className="flex h-[5px] w-full">
         <div className="flex-1 bg-[#5B8DEF]" />
         <div className="flex-1 bg-[#34B87D]" />
         <div className="flex-1 bg-[#D4A12A]" />
@@ -18,7 +18,7 @@ export default function LandingPage() {
         <div className="flex items-center gap-6">
           <a
             href="/personal-os/getting-started/what-is-this"
-            className="text-sm text-[#1a1a18] dark:text-[#e8e6e2] opacity-60 hover:opacity-100 transition-opacity"
+            className="text-sm text-[#484540] dark:text-[#b0ada6] hover:text-[#1a1a18] dark:hover:text-[#e8e6e2] transition-colors"
           >
             Docs
           </a>
@@ -26,23 +26,23 @@ export default function LandingPage() {
             href="https://github.com/jordantcarlisle/personal-os"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-[#1a1a18] dark:text-[#e8e6e2] opacity-60 hover:opacity-100 transition-opacity"
+            className="text-sm text-[#484540] dark:text-[#b0ada6] hover:text-[#1a1a18] dark:hover:text-[#e8e6e2] transition-colors"
           >
             GitHub
           </a>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="max-w-5xl mx-auto px-6 pt-20 pb-24">
+      {/* Hero — tightened vertical padding */}
+      <section className="max-w-5xl mx-auto px-6 pt-12 pb-16">
         <h1
-          className="text-[4.5rem] leading-[1.0] font-black tracking-[-0.03em] text-[#1a1a18] dark:text-[#e8e6e2] mb-6"
+          className="text-[4.5rem] leading-[1.0] font-black tracking-[-0.03em] text-[#1a1a18] dark:text-[#e8e6e2] mb-5"
           style={{ fontFamily: 'var(--font-inter, Inter, sans-serif)' }}
         >
           Personal OS
         </h1>
-        <p className="text-xl leading-relaxed text-[#1a1a18] dark:text-[#e8e6e2] opacity-70 max-w-2xl mb-10 font-normal">
-          An AI-powered operating system for your life. OKRs, GTD, PARA, and Atomic Habits —
+        <p className="text-xl leading-relaxed text-[#484540] dark:text-[#b0ada6] max-w-2xl mb-8 font-normal">
+          An AI-powered operating system for your life. OKRs, GTD, PARA, Atomic Habits, and 100+ Mental Models —
           integrated with your AI agent.
         </p>
         <div className="flex items-center gap-4">
@@ -65,16 +65,20 @@ export default function LandingPage() {
 
       {/* Divider */}
       <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px bg-[#1a1a18] dark:bg-[#e8e6e2] opacity-10" />
+        <div className="h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
       </div>
 
       {/* Daily Loop */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
-        <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#1a1a18] dark:text-[#e8e6e2] opacity-40 mb-4">
-          The Daily Loop
-        </p>
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        {/* Section label with extending line */}
+        <div className="flex items-center gap-4 mb-5">
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#7d7a72] dark:text-[#858380] shrink-0">
+            The Daily Loop
+          </p>
+          <div className="flex-1 h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
+        </div>
         <h2
-          className="text-[2.25rem] leading-tight font-black tracking-[-0.02em] text-[#1a1a18] dark:text-[#e8e6e2] mb-12"
+          className="text-[2.25rem] leading-tight font-black tracking-[-0.02em] text-[#1a1a18] dark:text-[#e8e6e2] mb-10"
           style={{ fontFamily: 'var(--font-inter, Inter, sans-serif)' }}
         >
           Three rituals that compound into clarity.
@@ -82,15 +86,17 @@ export default function LandingPage() {
 
         <div className="flex flex-col gap-0">
           {/* /reflect */}
-          <div className="border-t border-[#1a1a18] dark:border-[#e8e6e2] border-opacity-10 dark:border-opacity-10 py-8 flex items-start gap-10">
-            <span
-              className="text-[2rem] font-black tracking-[-0.02em] text-[#5B8DEF] whitespace-nowrap w-36 shrink-0"
-              style={{ fontFamily: 'var(--font-jetbrains-mono, monospace)' }}
-            >
-              /reflect
-            </span>
-            <div>
-              <p className="text-base leading-relaxed text-[#1a1a18] dark:text-[#e8e6e2] opacity-70">
+          <div className="border-t border-[#e0ded8] dark:border-[#2e2e2e] py-7 flex items-start gap-10">
+            <div className="shrink-0 w-44">
+              <span
+                className="inline-block text-[2rem] font-black tracking-[-0.02em] text-[#5B8DEF] pl-3 border-l-4 border-[#5B8DEF]"
+                style={{ fontFamily: 'var(--font-jetbrains-mono, monospace)' }}
+              >
+                /reflect
+              </span>
+            </div>
+            <div className="pt-1">
+              <p className="text-base leading-relaxed text-[#484540] dark:text-[#b0ada6]">
                 Morning intentions, gratitude, energy check. Evening wins, lessons, habit tracking.
                 The heartbeat of the system.
               </p>
@@ -98,15 +104,17 @@ export default function LandingPage() {
           </div>
 
           {/* /triage */}
-          <div className="border-t border-[#1a1a18] dark:border-[#e8e6e2] border-opacity-10 dark:border-opacity-10 py-8 flex items-start gap-10">
-            <span
-              className="text-[2rem] font-black tracking-[-0.02em] text-[#34B87D] whitespace-nowrap w-36 shrink-0"
-              style={{ fontFamily: 'var(--font-jetbrains-mono, monospace)' }}
-            >
-              /triage
-            </span>
-            <div>
-              <p className="text-base leading-relaxed text-[#1a1a18] dark:text-[#e8e6e2] opacity-70">
+          <div className="border-t border-[#e0ded8] dark:border-[#2e2e2e] py-7 flex items-start gap-10">
+            <div className="shrink-0 w-44">
+              <span
+                className="inline-block text-[2rem] font-black tracking-[-0.02em] text-[#34B87D] pl-3 border-l-4 border-[#34B87D]"
+                style={{ fontFamily: 'var(--font-jetbrains-mono, monospace)' }}
+              >
+                /triage
+              </span>
+            </div>
+            <div className="pt-1">
+              <p className="text-base leading-relaxed text-[#484540] dark:text-[#b0ada6]">
                 Scan email, messages, calendar. Process inbox to zero. Surface what&apos;s urgent
                 before you start your day.
               </p>
@@ -114,15 +122,17 @@ export default function LandingPage() {
           </div>
 
           {/* /plan */}
-          <div className="border-t border-b border-[#1a1a18] dark:border-[#e8e6e2] border-opacity-10 dark:border-opacity-10 py-8 flex items-start gap-10">
-            <span
-              className="text-[2rem] font-black tracking-[-0.02em] text-[#D4A12A] whitespace-nowrap w-36 shrink-0"
-              style={{ fontFamily: 'var(--font-jetbrains-mono, monospace)' }}
-            >
-              /plan
-            </span>
-            <div>
-              <p className="text-base leading-relaxed text-[#1a1a18] dark:text-[#e8e6e2] opacity-70">
+          <div className="border-t border-b border-[#e0ded8] dark:border-[#2e2e2e] py-7 flex items-start gap-10">
+            <div className="shrink-0 w-44">
+              <span
+                className="inline-block text-[2rem] font-black tracking-[-0.02em] text-[#D4A12A] pl-3 border-l-4 border-[#D4A12A]"
+                style={{ fontFamily: 'var(--font-jetbrains-mono, monospace)' }}
+              >
+                /plan
+              </span>
+            </div>
+            <div className="pt-1">
+              <p className="text-base leading-relaxed text-[#484540] dark:text-[#b0ada6]">
                 Build today&apos;s sprint. Max 3–5 items. Timebox each one. The agent enforces a
                 hard limit so you finish with wins.
               </p>
@@ -133,21 +143,27 @@ export default function LandingPage() {
 
       {/* Divider */}
       <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px bg-[#1a1a18] dark:bg-[#e8e6e2] opacity-10" />
+        <div className="h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
       </div>
 
       {/* Platforms */}
-      <section className="max-w-5xl mx-auto px-6 py-16">
-        <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#1a1a18] dark:text-[#e8e6e2] opacity-40 mb-6">
-          Works With Your AI Tool
-        </p>
-        <div className="flex items-center gap-8 flex-wrap">
-          {['Claude Code', 'Gemini CLI', 'OpenAI Codex', 'Cursor'].map((platform) => (
-            <span
-              key={platform}
-              className="text-lg font-semibold text-[#1a1a18] dark:text-[#e8e6e2] opacity-50"
-            >
-              {platform}
+      <section className="max-w-5xl mx-auto px-6 py-12">
+        {/* Section label with extending line */}
+        <div className="flex items-center gap-4 mb-6">
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#7d7a72] dark:text-[#858380] shrink-0">
+            Works With Your AI Tool
+          </p>
+          <div className="flex-1 h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
+        </div>
+        <div className="flex items-center flex-wrap">
+          {['Claude Code', 'Gemini CLI', 'OpenAI Codex', 'Cursor'].map((platform, i, arr) => (
+            <span key={platform} className="flex items-center">
+              <span className="text-lg font-bold text-[#1a1a18] dark:text-[#e8e6e2] opacity-60 hover:opacity-90 transition-opacity">
+                {platform}
+              </span>
+              {i < arr.length - 1 && (
+                <span className="mx-4 text-[#e0ded8] dark:text-[#2e2e2e] font-normal select-none">·</span>
+              )}
             </span>
           ))}
         </div>
@@ -155,16 +171,20 @@ export default function LandingPage() {
 
       {/* Divider */}
       <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px bg-[#1a1a18] dark:bg-[#e8e6e2] opacity-10" />
+        <div className="h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
       </div>
 
       {/* Modules */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
-        <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#1a1a18] dark:text-[#e8e6e2] opacity-40 mb-4">
-          Optional Modules
-        </p>
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        {/* Section label with extending line */}
+        <div className="flex items-center gap-4 mb-5">
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#7d7a72] dark:text-[#858380] shrink-0">
+            Optional Modules
+          </p>
+          <div className="flex-1 h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
+        </div>
         <h2
-          className="text-[2.25rem] leading-tight font-black tracking-[-0.02em] text-[#1a1a18] dark:text-[#e8e6e2] mb-12"
+          className="text-[2.25rem] leading-tight font-black tracking-[-0.02em] text-[#1a1a18] dark:text-[#e8e6e2] mb-8"
           style={{ fontFamily: 'var(--font-inter, Inter, sans-serif)' }}
         >
           Layer on what matters to you.
@@ -211,21 +231,21 @@ export default function LandingPage() {
           ].map((module) => (
             <div
               key={module.name}
-              className="border-t border-[#1a1a18] dark:border-[#e8e6e2] border-opacity-10 dark:border-opacity-10 py-6 pr-8"
+              className="border-t border-[#e0ded8] dark:border-[#2e2e2e] py-5 pr-8"
             >
               <span
-                className="inline-block font-mono text-xs tracking-[0.15em] uppercase mb-2 px-2 py-0.5"
+                className="inline-block font-mono text-xs tracking-[0.15em] uppercase mb-2 px-2 py-0.5 font-bold"
                 style={{
                   color: module.color,
-                  backgroundColor: `${module.color}18`,
+                  backgroundColor: `${module.color}1a`,
                 }}
               >
                 {module.label}
               </span>
-              <h3 className="text-base font-bold text-[#1a1a18] dark:text-[#e8e6e2] mb-1">
+              <h3 className="text-base font-extrabold text-[#1a1a18] dark:text-[#e8e6e2] mb-1 tracking-[-0.01em]">
                 {module.name}
               </h3>
-              <p className="text-sm text-[#1a1a18] dark:text-[#e8e6e2] opacity-60 leading-relaxed">
+              <p className="text-sm text-[#7d7a72] dark:text-[#858380] leading-relaxed">
                 {module.description}
               </p>
             </div>
@@ -235,37 +255,38 @@ export default function LandingPage() {
 
       {/* Divider */}
       <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px bg-[#1a1a18] dark:bg-[#e8e6e2] opacity-10" />
+        <div className="h-px bg-[#e0ded8] dark:bg-[#2e2e2e]" />
       </div>
 
       {/* CTA */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
+      <section className="max-w-5xl mx-auto px-6 py-14">
         <h2
-          className="text-[2.25rem] leading-tight font-black tracking-[-0.02em] text-[#1a1a18] dark:text-[#e8e6e2] mb-3"
+          className="text-[2.25rem] leading-tight font-black tracking-[-0.02em] text-[#1a1a18] dark:text-[#e8e6e2] mb-2"
           style={{ fontFamily: 'var(--font-inter, Inter, sans-serif)' }}
         >
           Clone it. Run /onboard. Go.
         </h2>
-        <p className="text-lg text-[#1a1a18] dark:text-[#e8e6e2] opacity-60 mb-8">
+        <p className="text-lg text-[#484540] dark:text-[#b0ada6] mb-7">
           You&apos;ll be operational in one sitting.
         </p>
-        <div className="bg-[#1a1a18] dark:bg-[#0a0a0a] text-[#e8e6e2] p-6 font-mono text-sm leading-relaxed max-w-xl">
+        <div className="bg-[#1e1e1e] dark:bg-[#0d0d0d] border border-[#2e2e2e] text-[#e8e6e2] p-6 font-mono text-sm leading-relaxed max-w-xl">
           <div>
-            <span className="opacity-40">$</span>{' '}
+            <span className="text-[#858380]">$</span>{' '}
             <span className="text-[#34B87D]">git clone</span>{' '}
-            https://github.com/jordantcarlisle/personal-os.git
+            <span className="text-[#e8e6e2]">https://github.com/jordantcarlisle/personal-os.git</span>
           </div>
           <div>
-            <span className="opacity-40">$</span>{' '}
-            <span className="text-[#5B8DEF]">cd</span> personal-os
+            <span className="text-[#858380]">$</span>{' '}
+            <span className="text-[#5B8DEF]">cd</span>{' '}
+            <span className="text-[#e8e6e2]">personal-os</span>
           </div>
-          <div className="mt-2 opacity-40"># Then run /onboard in your AI tool</div>
+          <div className="mt-2 text-[#858380]"># Then run /onboard in your AI tool</div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="max-w-5xl mx-auto px-6 py-8 border-t border-[#1a1a18] dark:border-[#e8e6e2] border-opacity-10">
-        <p className="font-mono text-xs tracking-wide text-[#1a1a18] dark:text-[#e8e6e2] opacity-30">
+      <footer className="max-w-5xl mx-auto px-6 py-8 border-t border-[#e0ded8] dark:border-[#2e2e2e]">
+        <p className="font-mono text-xs tracking-wide text-[#7d7a72] dark:text-[#858380]">
           Jordan Carlisle — Personal OS
         </p>
       </footer>
