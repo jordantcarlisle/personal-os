@@ -42,8 +42,7 @@ export default function LandingPage() {
           Personal OS
         </h1>
         <p className="text-xl leading-relaxed text-[#484540] dark:text-[#b0ada6] max-w-2xl mb-8 font-normal">
-          An AI-powered operating system for your life. OKRs, GTD, PARA, Atomic Habits, and 100+ Mental Models —
-          integrated with your AI agent.
+          An AI-powered operating system for your life, shaped by the systems thinking behind Jordan Carlisle&apos;s TED Talk.
         </p>
         <div className="flex items-center gap-4 flex-wrap">
           <a
@@ -69,8 +68,7 @@ export default function LandingPage() {
             Why this exists
           </p>
           <p className="text-lg leading-relaxed text-[#484540] dark:text-[#b0ada6] mb-5">
-            Personal OS grew out of Jordan Carlisle&apos;s TED Talk — a synthesis of systems thinking,
-            lived experience, and the questions that shaped this work into something others could use.
+            The ideas behind Jordan Carlisle&apos;s TED Talk helped shape Personal OS into a system you can actually use.
           </p>
           <a
             href="https://www.youtube.com/watch?v=XyF2W_v-EVk"
