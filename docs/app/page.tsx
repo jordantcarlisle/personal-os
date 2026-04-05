@@ -45,7 +45,7 @@ export default function LandingPage() {
           An AI-powered operating system for your life. OKRs, GTD, PARA, Atomic Habits, and 100+ Mental Models —
           integrated with your AI agent.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <a
             href="/personal-os/getting-started/what-is-this"
             className="inline-block px-6 py-3 bg-[#1a1a18] dark:bg-[#e8e6e2] text-[#FAFAF7] dark:text-[#161616] text-sm font-semibold tracking-wide hover:opacity-90 transition-opacity"
@@ -59,6 +59,26 @@ export default function LandingPage() {
             className="inline-block px-6 py-3 border border-[#1a1a18] dark:border-[#e8e6e2] text-[#1a1a18] dark:text-[#e8e6e2] text-sm font-semibold tracking-wide hover:opacity-70 transition-opacity"
           >
             View on GitHub
+          </a>
+        </div>
+      </section>
+
+      <section className="max-w-5xl mx-auto px-6 pb-16">
+        <div className="border border-[#e0ded8] dark:border-[#2e2e2e] bg-[#f3f1eb] dark:bg-[#1b1b1b] p-6 md:p-7 max-w-3xl">
+          <p className="font-mono text-xs tracking-[0.18em] uppercase text-[#7d7a72] dark:text-[#858380] mb-3">
+            Why this exists
+          </p>
+          <p className="text-lg leading-relaxed text-[#484540] dark:text-[#b0ada6] mb-5">
+            Personal OS grew out of Jordan Carlisle&apos;s TED Talk — a synthesis of systems thinking,
+            lived experience, and the questions that shaped this work into something others could use.
+          </p>
+          <a
+            href="https://www.youtube.com/watch?v=XyF2W_v-EVk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-[#1a1a18] dark:text-[#e8e6e2] hover:opacity-70 transition-opacity"
+          >
+            Watch the talk <span aria-hidden="true">→</span>
           </a>
         </div>
       </section>
