@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal OS — XO Medtech with Spencer Jones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF8F2;
+    --cream-deep: #F2EFE6;
+    --stone: #E8E4DE;
+    --ink: #1C2826;
+    --ink-soft: #2A2D2E;
+    --ink-mute: #5C6360;
+    --ink-quiet: #8E928F;
+    --line: #E0DCD3;
+
+    --blue: #5B8DEF;
+    --green: #34B87D;
+    --coral: #E06B5A;
+    --gold: #D4A12A;
+    --copper: #B87550;
+
+    --pad: clamp(40px, 6vw, 96px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: var(--cream);
+    color: var(--ink);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  /* DECK LAYOUT */
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0;
+    padding: var(--pad);
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity 220ms ease;
+    overflow-y: auto;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* SLIDE FRAME — header + footer */
+  .slide-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: clamp(36px, 6vh, 72px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-quiet);
+  }
+  .slide-head .brand { font-weight: 700; color: var(--ink); }
+  .slide-head .brand::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    margin-right: 10px; vertical-align: middle;
+  }
+  .slide-foot {
+    margin-top: auto; padding-top: 32px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; width: 22px; height: 2px;
+    background: var(--gold); display: inline-block;
+  }
+
+  /* TYPOGRAPHY */
+  h1 {
+    font-size: clamp(40px, 6vw, 84px);
+    font-weight: 700; line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  h2 {
+    font-size: clamp(34px, 4.5vw, 64px);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  h3 {
+    font-size: clamp(20px, 2vw, 28px);
+    font-weight: 600; line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .lede {
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.55;
+    color: var(--ink-mute);
+    max-width: 64ch;
+  }
+  .pullquote {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(28px, 3.6vw, 52px);
+    line-height: 1.18;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    max-width: 22ch;
+  }
+  .meta { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.04em; color: var(--ink-mute); }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .ed { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; }
+
+  .accent-blue   { color: var(--blue); }
+  .accent-green  { color: var(--green); }
+  .accent-coral  { color: var(--coral); }
+  .accent-gold   { color: var(--gold); }
+  .accent-copper { color: var(--copper); }
+
+  .underline-mark {
+    background-image: linear-gradient(transparent 65%, color-mix(in srgb, var(--gold) 35%, transparent) 65%);
+    padding: 0 0.05em;
+  }
+
+  /* GENERIC LAYOUT HELPERS */
+  .stack { display: flex; flex-direction: column; gap: 20px; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .grid-2 { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(28px, 4vw, 64px); align-items: center; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .center-y { display: flex; flex-direction: column; justify-content: center; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .card-quiet {
+    background: rgba(232, 228, 222, 0.45);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    background: var(--cream-deep);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-mute); }
+  .chip.blue .dot { background: var(--blue); }
+  .chip.green .dot { background: var(--green); }
+  .chip.coral .dot { background: var(--coral); }
+  .chip.gold .dot { background: var(--gold); }
+  .chip.copper .dot { background: var(--copper); }
+
+  /* IMAGE PLACEHOLDER */
+  .placeholder {
+    background:
+      repeating-linear-gradient(135deg, transparent 0 12px, rgba(184, 117, 80, 0.06) 12px 13px),
+      var(--cream-deep);
+    border: 1px dashed color-mix(in srgb, var(--copper) 50%, var(--line));
+    border-radius: 14px;
+    padding: 28px;
+    color: var(--ink-mute);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 220px;
+    justify-content: center;
+  }
+  .placeholder .ph-label { color: var(--copper); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; }
+  .placeholder .ph-title { color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: -0.005em; }
+  .placeholder .ph-desc { color: var(--ink-mute); }
+
+  /* SIGNAL MARK — small waveform → dot */
+  .signal-mark {
+    display: inline-flex; align-items: end; gap: 3px; height: 14px;
+    vertical-align: middle;
+  }
+  .signal-mark span {
+    width: 3px; background: var(--ink-quiet); border-radius: 1px;
+    display: inline-block;
+  }
+  .signal-mark span.s1 { height: 5px; }
+  .signal-mark span.s2 { height: 8px; }
+  .signal-mark span.s3 { height: 12px; }
+  .signal-mark span.s4 { height: 9px; }
+  .signal-mark span.s5 { height: 6px; background: var(--blue); border-radius: 50%; width: 6px; height: 6px; align-self: center; }
+
+  /* NAV CONTROLS */
+  .nav-controls {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: center;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+    border-radius: 999px;
+    padding: 6px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    z-index: 100;
+  }
+  .nav-controls button {
+    background: transparent; border: none; cursor: pointer;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink);
+    transition: background 120ms ease;
+  }
+  .nav-controls button:hover { background: var(--cream-deep); }
+  .nav-controls .counter { padding: 0 10px; letter-spacing: 0.12em; }
+
+  .progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--green);
+    transition: width 220ms ease;
+    z-index: 50;
+  }
+
+  /* SLIDE-SPECIFIC */
+  /* 01 Title */
+  .s01 { justify-content: space-between; }
+  .s01 .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--ink-mute);
+    margin-bottom: 28px;
+  }
+  .s01 .hero-tag::before {
+    content:''; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background: var(--blue); margin-right: 12px; vertical-align:middle;
+  }
+  .s01 .hero-title {
+    font-size: clamp(48px, 7.5vw, 112px);
+    font-weight: 800; line-height: 0.95; letter-spacing: -0.035em;
+  }
+  .s01 .hero-title .ed { font-weight: 400; }
+  .s01 .bio-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 48px; max-width: 900px;
+  }
+  .s01 .bio-card {
+    border-top: 2px solid var(--line);
+    padding-top: 12px;
+  }
+  .s01 .bio-card.b1 { border-top-color: var(--blue); }
+  .s01 .bio-card.b2 { border-top-color: var(--green); }
+  .s01 .bio-card.b3 { border-top-color: var(--gold); }
+  .s01 .bio-card .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-quiet); margin-bottom: 6px; }
+  .s01 .bio-card .value { font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+
+  /* 02 Hook */
+  .s02 .hook { max-width: 18ch; }
+
+  /* 04 hub-and-spoke (grid layout, never collapses) */
+  .hub-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      "sp1 hub sp2"
+      "sp3 hub sp4"
+      "sp5 hub sp6";
+    column-gap: clamp(12px, 1.6vw, 28px);
+    row-gap: 14px;
+    align-items: center;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .hub-center {
+    grid-area: hub;
+    background: #fff; border: 2px solid var(--green);
+    border-radius: 999px; padding: 18px 22px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; color: var(--ink); text-align: center;
+    box-shadow: 0 6px 24px rgba(52, 184, 125, 0.18);
+    white-space: nowrap;
+    position: relative;
+    z-index: 3;
+  }
+  .hub-center::before, .hub-center::after {
+    content: ''; position: absolute; top: 50%;
+    width: clamp(12px, 1.6vw, 28px);
+    height: 1px; background: var(--line);
+    transform: translateY(-50%);
+  }
+  .hub-center::before { right: 100%; }
+  .hub-center::after  { left: 100%; }
+  .hub-spoke {
+    padding: 10px 12px;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 10px; font-size: 13px; font-weight: 500;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+    min-width: 0;
+  }
+  .hub-spoke .mono { color: var(--ink-quiet); font-size: 10px; flex-shrink: 0; }
+  .hub-spoke .lbl  { white-space: normal; line-height: 1.2; }
+  .hub-spoke.sp1 { grid-area: sp1; border-left: 3px solid var(--blue); }
+  .hub-spoke.sp2 { grid-area: sp2; border-left: 3px solid var(--green); }
+  .hub-spoke.sp3 { grid-area: sp3; border-left: 3px solid var(--coral); }
+  .hub-spoke.sp4 { grid-area: sp4; border-left: 3px solid var(--gold); }
+  .hub-spoke.sp5 { grid-area: sp5; border-left: 3px solid var(--copper); }
+  .hub-spoke.sp6 { grid-area: sp6; border-left: 3px solid var(--blue); }
+
+  /* 05 reflection routing + cadence */
+  .rf-routing {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px 24px;
+    margin-bottom: 18px;
+  }
+  .rf-pipe {
+    display: flex; align-items: center; gap: 14px;
+    flex-wrap: wrap; margin-bottom: 18px;
+  }
+  .rf-pip-in {
+    background: var(--cream-deep); border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 10px 14px; border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--ink);
+  }
+  .rf-pip-arr {
+    color: var(--ink-quiet); font-family: 'JetBrains Mono', monospace; font-size: 14px;
+  }
+  .rf-pip-router {
+    background: var(--ink); color: var(--cream);
+    padding: 10px 16px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .rf-pip-router::before {
+    content: '↓ '; color: var(--green); font-weight: 700;
+  }
+  .rf-lanes {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+  }
+  .rf-lane {
+    background: var(--cream); border: 1px solid var(--line);
+    border-top: 3px solid var(--ink-quiet);
+    border-radius: 10px; padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    min-height: 110px;
+  }
+  .rf-lane .rf-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-quiet);
+  }
+  .rf-lane .rf-head { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.25; }
+  .rf-lane .rf-frames { font-size: 11px; color: var(--ink-mute); line-height: 1.45; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
+  .rf-lane.lane-blue   { border-top-color: var(--blue); }
+  .rf-lane.lane-green  { border-top-color: var(--green); }
+  .rf-lane.lane-coral  { border-top-color: var(--coral); }
+  .rf-lane.lane-gold   { border-top-color: var(--gold); }
+  .rf-lane.lane-copper { border-top-color: var(--copper); }
+  .rf-meta-note {
+    font-size: 12px; color: var(--ink-mute); line-height: 1.5;
+    margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line);
+    font-style: italic;
+  }
+  .rf-cadence {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 14px; padding: 20px 24px;
+  }
+  .rf-cadence > .cad-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .rf-cadence h3 { font-size: 16px; font-weight: 700; }
+  .rf-cadence .cad-sub { font-size: 12px; color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+  .cad-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .cad-card {
+    background: var(--cream); border: 1px solid var(--line);
+    border-radius: 10px; padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .cad-card h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cad-card h4::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); display: inline-block;
+  }
+  .cad-card.cad-d h4::before { background: var(--blue); }
+  .cad-card.cad-w h4::before { background: var(--green); }
+  .cad-card.cad-m h4::before { background: var(--gold); }
+  .cad-card.cad-q h4::before { background: var(--coral); }
+  .cad-card p { font-size: 12px; color: var(--ink-mute); line-height: 1.5; }
+
+  /* 06 stack */
+  .stack-layers { display: flex; flex-direction: column; gap: 12px; max-width: 760px; margin: 0 auto; }
+  .stack-layer {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 20px; align-items: center;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 14px; padding: 18px 22px;
+  }
+  .stack-layer .ln { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-quiet); }
+  .stack-layer .ttl { font-size: 18px; font-weight: 600; }
+  .stack-layer .ttl small { display: block; font-weight: 400; color: var(--ink-mute); font-size: 14px; margin-top: 2px; }
+  .stack-layer .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--cream-deep); color: var(--ink-mute); }
+  .stack-layer.l4 { border-left: 4px solid var(--gold); }
+  .stack-layer.l3 { border-left: 4px solid var(--blue); }
+  .stack-layer.l2 {
+    border: 2px solid var(--green);
+    background: linear-gradient(180deg, rgba(52, 184, 125, 0.06), transparent);
+    box-shadow: 0 8px 28px rgba(52, 184, 125, 0.10);
+  }
+  .stack-layer.l2 .tag { background: var(--green); color: #fff; }
+  .stack-layer.l1 { border-left: 4px solid var(--coral); }
+
+  /* 06 custody before / after */
+  .ba-wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 28px; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .ba-col { padding: 24px; border-radius: 14px; min-height: 320px; }
+  .ba-before { background: var(--cream-deep); border: 1px solid var(--line); }
+  .ba-after { background: #fff; border: 1px solid var(--green); box-shadow: 0 8px 24px rgba(52, 184, 125, 0.08); }
+  .ba-arrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--ink-quiet); letter-spacing: 0.1em;
+    text-align: center; padding: 0 6px;
+  }
+  .ba-arrow .arr { display: block; font-size: 24px; color: var(--green); margin-bottom: 6px; }
+  .silos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
+  .silo {
+    height: 38px; border-radius: 6px;
+    background: #fff; border: 1px solid var(--line);
+    font-size: 9px; font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-quiet);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ba-after-vault {
+    margin-top: 14px;
+    border: 2px solid var(--green); border-radius: 12px;
+    padding: 22px; text-align: center; background: rgba(52, 184, 125, 0.05);
+  }
+  .ba-after-vault .v-title { font-weight: 700; font-size: 18px; }
+  .ba-after-vault .v-sub { font-size: 13px; color: var(--ink-mute); margin-top: 4px; }
+  .ba-after-vault .v-meta { display: flex; justify-content: center; gap: 18px; margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); }
+  .ba-after-vault .v-meta span::before { content: '✓'; color: var(--green); margin-right: 6px; font-weight: 700; }
+
+  /* 07 architecture */
+  .arch { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 1000px; margin: 0 auto; }
+  .arch-band { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid var(--line); background: #fff; border-radius: 12px; }
+  .arch-band .arch-label { width: 130px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-quiet); }
+  .arch-band .arch-items { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+  .arch-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500;
+    padding: 5px 10px; border-radius: 6px;
+    background: var(--cream-deep); border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  /* Bigger variant for slide 7 emphasis */
+  .arch-big { max-width: 1200px; gap: 18px; }
+  .arch-big .arch-band { padding: 24px 28px; gap: 22px; border-radius: 14px; }
+  .arch-big .arch-band .arch-label { width: 160px; font-size: 12px; letter-spacing: 0.16em; }
+  .arch-big .arch-band .arch-items { gap: 10px; }
+  .arch-big .arch-pill { font-size: 14px; padding: 8px 14px; border-radius: 8px; font-weight: 600; }
+  .arch-pill.pri { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .arch-pill.pri-blue { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .arch-pill.pri-green { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* 08 compounding effect */
+  .graph-wrap {
+    position: relative; aspect-ratio: 1.3;
+    max-width: 720px; margin: 0 auto;
+  }
+  .graph-center {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 130px; height: 130px; border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(52, 184, 125, 0.18), rgba(52, 184, 125, 0.02) 70%);
+    border: 2px solid var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-align: center; color: var(--ink); z-index: 3;
+    box-shadow: 0 0 0 6px rgba(52, 184, 125, 0.06), 0 0 0 14px rgba(52, 184, 125, 0.03);
+  }
+  .graph-node {
+    position: absolute; padding: 7px 12px;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 8px; font-size: 12px; font-weight: 500;
+    color: var(--ink); white-space: nowrap;
+    z-index: 2;
+  }
+  .graph-node::before {
+    content: ''; position: absolute; left: -5px; top: 50%; transform: translateY(-50%);
+    width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  }
+  .graph-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+
+  .uses-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 800px; margin: 32px auto 0; }
+  .use-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 18px; margin-top: 24px;
+  }
+  .use-row .use-card {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 12px; padding: 18px 20px;
+    flex-direction: column; align-items: flex-start; gap: 10px;
+  }
+  .use-row .use-card .num {
+    font-size: 11px; letter-spacing: 0.16em;
+  }
+  .use-card { display: flex; gap: 14px; align-items: flex-start; }
+  .use-card .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--green); padding-top: 2px; min-width: 24px; }
+  .use-card .body { font-size: 14px; line-height: 1.45; color: var(--ink); }
+  .kg-image { background:
+      repeating-linear-gradient(135deg, transparent 0 12px, rgba(91, 141, 239, 0.06) 12px 13px),
+      var(--cream-deep);
+  }
+
+  /* 09 Loaded frameworks */
+  .fw-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; row-gap: 18px; }
+  .fw-grid .fw-col { grid-column: span 2; }
+  .fw-grid .fw-col.row2 { grid-column: span 3; }
+  .fw-col h3 { font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-quiet); margin-bottom: 12px; }
+  .fw-col.c1 h3 { color: var(--blue); }
+  .fw-col.c2 h3 { color: var(--coral); }
+  .fw-col.c3 h3 { color: var(--gold); }
+  .fw-col.c4 h3 { color: var(--copper); }
+  .fw-col.c5 h3 { color: var(--green); }
+  .fw-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .fw-col li {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: 13px; font-weight: 500; color: var(--ink);
+  }
+  .fw-col li small { display: block; color: var(--ink-mute); font-weight: 400; font-size: 10px; margin-top: 2px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+
+  /* 10 interface inversion */
+  .inv-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; }
+  .inv-col { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .inv-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-quiet); margin-bottom: 6px; }
+  .inv-col:nth-child(1) h4 { color: var(--blue); }
+  .inv-col:nth-child(2) h4 { color: var(--green); }
+  .inv-col .inv-sub { font-size: 13px; color: var(--ink-mute); margin-bottom: 14px; line-height: 1.5; }
+  .inv-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .built-stack { display: flex; flex-direction: column; gap: 10px; }
+  .built-row { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.45; padding: 10px 12px; background: var(--cream); border-radius: 10px; border-left: 3px solid var(--green); }
+  .built-row .bn { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green); font-weight: 700; padding-top: 1px; }
+  .built-row strong { color: var(--ink); }
+
+  /* 11 receipts */
+  .recpt-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .recpt-block {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .recpt-block.work    { border-top: 4px solid var(--green); }
+  .recpt-block.real    { border-top: 4px solid var(--copper); }
+  .recpt-block.brand   { border-top: 4px solid var(--blue); }
+  .recpt-block.life    { border-top: 4px solid var(--gold); }
+  .recpt-block .head { display: flex; justify-content: space-between; align-items: baseline; }
+  .recpt-block .ttl { font-size: 16px; font-weight: 700; }
+  .recpt-block .count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-quiet); letter-spacing: 0.12em; }
+  .recpt-block ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .recpt-block li { font-size: 13px; color: var(--ink); display: flex; gap: 8px; }
+  .recpt-block li::before { content: '·'; color: var(--ink-quiet); font-weight: 800; }
+  .recpt-foot {
+    grid-column: 1 / -1;
+    background: var(--cream-deep);
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--coral);
+    border-radius: 14px;
+    padding: 16px 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+  }
+  .recpt-foot .ttl { font-weight: 700; }
+  .recpt-foot .items { font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-size: 12px; }
+
+  /* 12 personal health record / biosensors */
+  .biosensors {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+  }
+  .bio-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-quiet); margin-bottom: 14px; }
+  .bio-col.now h4 { color: var(--blue); }
+  .bio-col.next h4 { color: var(--green); }
+  .bio-list { display: flex; flex-direction: column; gap: 5px; }
+  .bio-item {
+    background: #fff; border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; gap: 12px;
+  }
+  .bio-item .n { font-weight: 600; color: var(--ink); }
+  .bio-item .v { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-quiet); letter-spacing: 0.05em; }
+  .bio-col.next .bio-item { border-style: dashed; }
+
+  /* 13 disintermediation */
+  .vc-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 1080px; margin: 0 auto; }
+  .vc-col { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .vc-col.now { background: var(--cream-deep); }
+  .vc-flow { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: 16px; }
+  .vc-step {
+    padding: 12px 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    font-size: 13px; text-align: center;
+  }
+  .vc-arr { text-align: center; color: var(--ink-quiet); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .vc-step.user { border-left: 3px solid var(--blue); }
+  .vc-step.agg { border-left: 3px solid var(--coral); background: rgba(224, 107, 90, 0.05); }
+  .vc-step.spec { border-left: 3px solid var(--copper); }
+  .vc-step.agent { border-left: 3px solid var(--green); background: rgba(52, 184, 125, 0.05); }
+  .vc-col h4 { font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-quiet); }
+  .vc-col.now h4 { color: var(--coral); }
+  .vc-col.next h4 { color: var(--green); }
+
+  /* 14 four bets */
+  .bets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .bet {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 24px 22px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .bet .num {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic; font-weight: 400;
+    font-size: 64px; line-height: 0.9; color: var(--gold);
+  }
+  .bet h3 { font-size: 19px; font-weight: 700; line-height: 1.2; }
+  .bet p { font-size: 13px; color: var(--ink-mute); line-height: 1.5; }
+  .bet:nth-child(1) .num { color: var(--blue); }
+  .bet:nth-child(2) .num { color: var(--copper); }
+  .bet:nth-child(3) .num { color: var(--green); }
+  .bet:nth-child(4) .num { color: var(--coral); }
+
+  /* 15 closing */
+  .close-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; }
+  .close-links { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+  .close-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    text-decoration: none; color: var(--ink);
+    transition: border-color 120ms ease;
+  }
+  .close-link:hover { border-color: var(--green); }
+  .close-link .role { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-quiet); }
+  .close-link .label { font-size: 16px; font-weight: 600; margin-top: 4px; }
+  .close-link .arr { color: var(--green); font-size: 18px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3, .grid-4, .recpt-grid, .fw-grid, .bets, .built-grid, .vc-wrap, .biosensors, .close-grid { grid-template-columns: 1fr; }
+    .ba-wrap { grid-template-columns: 1fr; }
+    .ba-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ============ 01 TITLE ============ -->
+  <section class="slide active s01" data-slide="1">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span><span class="signal-mark"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></span></span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="hero-tag">XO Medtech · with Spencer Jones · 2026-04-29</div>
+      <div class="hero-title">
+        Personal&nbsp;OS:<br>
+        an agent that runs on<br>
+        <span class="ed underline-mark">data you own.</span>
+      </div>
+
+      <div class="bio-row">
+        <div class="bio-card b1">
+          <div class="label">Speaker</div>
+          <div class="value">Jordan Carlisle<br>Chief Product &amp; Technology Officer, Sober Sidekick</div>
+        </div>
+        <div class="bio-card b2">
+          <div class="label">Public work</div>
+          <div class="value">TEDx Bentonville 2025<br><span class="ed">"Building a Personal Operating System for Healthy Lifestyle"</span></div>
+        </div>
+        <div class="bio-card b3">
+          <div class="label">Building</div>
+          <div class="value">Helm — personal AI assistant<br>Personal OS — public framework</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>01 · Title</span>
+      <span>jordan@sobersidekick.com</span>
+    </div>
+  </section>
+
+  <!-- ============ 02 HOOK ============ -->
+  <section class="slide s02" data-slide="2">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">02 / 16</span>
+    </div>
+
+    <div style="margin: auto 0; max-width: 1100px;">
+      <div class="section-label">The hook</div>
+      <p class="pullquote hook" style="font-size: clamp(40px, 5.4vw, 88px); max-width: 22ch; line-height: 1.05;">
+        Every human is about to have a personal&nbsp;OS &mdash; running on data they own.
+      </p>
+      <p class="lede" style="margin-top: 32px; font-size: clamp(20px, 1.9vw, 26px);">
+        I've been building mine. Let me show you what I did this morning.
+      </p>
+    </div>
+
+    <div class="slide-foot">
+      <span>02 · Hook</span>
+      <span>Section · 1</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 MORNING REFLECTION ============ -->
+  <section class="slide" data-slide="3">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">03 / 16</span>
+    </div>
+
+    <div class="grid-2" style="margin: auto 0; grid-template-columns: 1fr 1.05fr; gap: clamp(24px, 3.5vw, 48px); align-items: center;">
+      <div>
+        <div class="section-label">Section 2 · The artifact</div>
+        <h2>The morning reflection.<br>One ritual. Every domain.</h2>
+        <p class="lede" style="margin-top: 22px;">
+          Each morning Helm prompts me on Discord. I reply by voice, it captures the raw audio plus a structured extraction, and the same flow runs again at evening close — what got done, what early signals say, what I learned.
+        </p>
+        <div class="row" style="margin-top: 22px;">
+          <span class="chip green"><span class="dot"></span>discord gateway</span>
+          <span class="chip blue"><span class="dot"></span>voice-replied</span>
+          <span class="chip gold"><span class="dot"></span>morning + evening</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div style="border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 12px 36px rgba(28, 40, 38, 0.08);">
+          <img src="assets/IMG_5169.PNG" alt="Helm morning setup prompts in Discord with Jordan's voice reply" style="width: 100%; display: block;">
+        </div>
+        <div style="border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 12px 36px rgba(28, 40, 38, 0.08);">
+          <img src="assets/IMG_5170.PNG" alt="Helm evening close prompts in Discord" style="width: 100%; display: block;">
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>03 · Morning reflection</span>
+      <span>Section · 2 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 WHAT IT PULLS IN ============ -->
+  <section class="slide" data-slide="4">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">04 / 16</span>
+    </div>
+
+    <div class="grid-2" style="margin: auto 0;">
+      <div>
+        <div class="section-label">What the ritual pulls in</div>
+        <h2>One prompt. Six&nbsp;domains.</h2>
+        <p class="lede" style="margin-top: 18px;">
+          The reflection isn't a journal — it's an integration point. Helm queries every active domain, fuses the signal, and surfaces what should drive my day.
+        </p>
+        <p class="meta" style="margin-top: 22px;">
+          → health &nbsp; → relationships &nbsp; → finances<br>
+          → learning &nbsp; → personal brand &nbsp; → career / coach
+        </p>
+      </div>
+
+      <div class="hub-wrap">
+        <div class="hub-center">Reflection<br>ritual</div>
+        <div class="hub-spoke sp1"><span class="mono">01</span><span class="lbl">Health</span></div>
+        <div class="hub-spoke sp2"><span class="mono">02</span><span class="lbl">Relationships</span></div>
+        <div class="hub-spoke sp3"><span class="mono">03</span><span class="lbl">Finances</span></div>
+        <div class="hub-spoke sp4"><span class="mono">04</span><span class="lbl">Learning system</span></div>
+        <div class="hub-spoke sp5"><span class="mono">05</span><span class="lbl">Personal brand &amp; content</span></div>
+        <div class="hub-spoke sp6"><span class="mono">06</span><span class="lbl">Career admin / coach</span></div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>04 · What it pulls in</span>
+      <span>Section · 2 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 05 REFLECTION ROUTING + CADENCE ============ -->
+  <section class="slide" data-slide="5">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">05 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">How the reflection becomes the engine</div>
+      <h2 style="max-width: 24ch;">One reflection routes through every framework &mdash; at the right cadence.</h2>
+      <p class="lede" style="margin-top: 12px; max-width: 78ch;">
+        The agent classifies what I share, applies the relevant framework from the open-source Personal OS playbook, and queues the right depth of follow-up. It also recognizes when I'm reflecting on real work &mdash; and overlays mental models so I think strategically about whatever's in front of me.
+      </p>
+
+      <div class="rf-routing" style="margin-top: 24px;">
+        <div class="rf-pipe">
+          <span class="rf-pip-in">Daily reflection input</span>
+          <span class="rf-pip-arr">→</span>
+          <span class="rf-pip-router">Agent classifies &amp; applies</span>
+        </div>
+        <div class="rf-lanes">
+          <div class="rf-lane lane-blue">
+            <span class="rf-tag">Goal-setting</span>
+            <span class="rf-head">Goals &amp; outcomes</span>
+            <span class="rf-frames">OKRs · SMART · 20-mile march</span>
+          </div>
+          <div class="rf-lane lane-green">
+            <span class="rf-tag">Project &amp; task mgmt</span>
+            <span class="rf-head">Action &amp; throughput</span>
+            <span class="rf-frames">GTD · PARA · time blocking</span>
+          </div>
+          <div class="rf-lane lane-gold">
+            <span class="rf-tag">Knowledge mgmt</span>
+            <span class="rf-head">Learning capture</span>
+            <span class="rf-frames">Learning inventory · Feynman · spaced repetition · interleaving</span>
+          </div>
+          <div class="rf-lane lane-coral">
+            <span class="rf-tag">Habits</span>
+            <span class="rf-head">Identity &amp; rhythm</span>
+            <span class="rf-frames">Atomic Habits · gratitude · daily wins &amp; lessons</span>
+          </div>
+          <div class="rf-lane lane-copper">
+            <span class="rf-tag">Mental models</span>
+            <span class="rf-head">Strategic overlay</span>
+            <span class="rf-frames">Farnam Street · applied to current work</span>
+          </div>
+        </div>
+        <p class="rf-meta-note">
+          Plus: when I'm reflecting on something I'm <em>actually doing</em>, the agent recognizes it &mdash; integrates the learning back into the inventory and surfaces it the next time the same shape of problem comes up.
+        </p>
+      </div>
+
+      <div class="rf-cadence">
+        <div class="cad-head">
+          <h3>And operates at four cadences.</h3>
+          <span class="cad-sub">Each cadence triggers a different depth of reflection across every spoke.</span>
+        </div>
+        <div class="cad-row">
+          <div class="cad-card cad-d">
+            <h4>Daily</h4>
+            <p>Top-3 priorities · GTD freshness · habit check · gratitude · evening close</p>
+          </div>
+          <div class="cad-card cad-w">
+            <h4>Weekly</h4>
+            <p>Weekly review · sprint progress · learning sprint · open-loop pruning · finance reconcile</p>
+          </div>
+          <div class="cad-card cad-m">
+            <h4>Monthly</h4>
+            <p>Theme review · learning consolidation · habit audit · budget-to-actual · health protocol check</p>
+          </div>
+          <div class="cad-card cad-q">
+            <h4>Quarterly</h4>
+            <p>OKR review · Best Self sprint · strategic re-orient · annual financial planning · health re-baseline</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>05 · Reflection routing + cadence</span>
+      <span>Section · 2 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 06 STACK ============ -->
+  <section class="slide" data-slide="6">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">06 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">Section 3 · The stack</div>
+      <h2 style="max-width: 18ch;">Four layers. Custody is&nbsp;load-bearing.</h2>
+
+      <div class="stack-layers" style="margin-top: 36px;">
+        <div class="stack-layer l4">
+          <div class="ln">L 04</div>
+          <div class="ttl">Interface / Collaboration<small>Markdown today &nbsp;·&nbsp; multimodal tomorrow (voice, glasses, ambient)</small></div>
+          <div class="tag">how you work with it</div>
+        </div>
+        <div class="stack-layer l3">
+          <div class="ln">L 03</div>
+          <div class="ttl">Execution<small>Models · harness · skills · tools &nbsp;·&nbsp; frontier → open-source &amp; edge</small></div>
+          <div class="tag">where reasoning lives</div>
+        </div>
+        <div class="stack-layer l2">
+          <div class="ln">L 02</div>
+          <div class="ttl">Storage / Custody<small>Personal hybrid cloud · on-device + home NAS + raw cloud backup &nbsp;·&nbsp; agent-direct, no rate-limits</small></div>
+          <div class="tag">load-bearing</div>
+        </div>
+        <div class="stack-layer l1">
+          <div class="ln">L 01</div>
+          <div class="ttl">Inputs / Peripherals<small>Wearables · rings · glasses · phones · smart home · open data feeds</small></div>
+          <div class="tag">surface area</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>06 · The stack</span>
+      <span>Section · 3 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 07 CUSTODY ============ -->
+  <section class="slide" data-slide="7">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">07 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">Why custody is load-bearing</div>
+      <h2 style="max-width: 22ch;">Today's data lives in 30+&nbsp;silos. The agent can't&nbsp;reach&nbsp;it.</h2>
+
+      <div class="ba-wrap" style="margin-top: 36px;">
+        <div class="ba-col ba-before">
+          <div class="meta">Today</div>
+          <h3 style="margin-top: 8px;">Bifurcated · siloed · rate-limited</h3>
+          <div class="silos">
+            <div class="silo">EHR</div><div class="silo">Insurer</div><div class="silo">Oura</div><div class="silo">Whoop</div>
+            <div class="silo">Apple</div><div class="silo">Google</div><div class="silo">Gym</div><div class="silo">Pharma</div>
+            <div class="silo">Lab A</div><div class="silo">Lab B</div><div class="silo">CGM</div><div class="silo">DTC</div>
+            <div class="silo">App x</div><div class="silo">App y</div><div class="silo">App z</div><div class="silo">+15</div>
+          </div>
+          <p class="meta" style="margin-top: 16px; font-size: 12px;">Each vendor wants to own as much as possible. Your agent has to beg for access.</p>
+        </div>
+
+        <div class="ba-arrow">
+          <span class="arr">→</span>
+          custody<br>shift
+        </div>
+
+        <div class="ba-col ba-after">
+          <div class="meta accent-green">Coming</div>
+          <h3 style="margin-top: 8px;">Personal hybrid cloud</h3>
+          <div class="ba-after-vault">
+            <div class="v-title">Your data · your sandbox</div>
+            <div class="v-sub">on-device · home NAS · raw cloud backup</div>
+            <div class="v-meta">
+              <span>Portable</span>
+              <span>Direct</span>
+              <span>No rate limits</span>
+            </div>
+          </div>
+          <p class="meta" style="margin-top: 16px; font-size: 12px;">Secure enclaves &amp; biometric-gated stores already exist. The portable, agent-readable layer is what's still missing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>07 · Custody</span>
+      <span>Section · 3 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 08 ARCHITECTURE ============ -->
+  <section class="slide" data-slide="8">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">08 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">My implementation today</div>
+      <h2 style="max-width: 26ch;">Helm: My Personal System and Operating&nbsp;System.</h2>
+
+      <div class="arch arch-big" style="margin-top: 36px;">
+        <div class="arch-band">
+          <div class="arch-label">Interface</div>
+          <div class="arch-items">
+            <span class="arch-pill">Discord (mobile + voice)</span>
+            <span class="arch-pill">SSH (deep work)</span>
+            <span class="arch-pill">Obsidian (review)</span>
+          </div>
+        </div>
+        <div class="arch-band">
+          <div class="arch-label">Agent</div>
+          <div class="arch-items">
+            <span class="arch-pill pri">Helm prompt</span>
+            <span class="arch-pill">Hermes harness</span>
+            <span class="arch-pill">Skills · sub-agents · cron</span>
+            <span class="arch-pill">MCP tools (Amplitude, Slack, Linear, Figma)</span>
+          </div>
+        </div>
+        <div class="arch-band">
+          <div class="arch-label">Compute</div>
+          <div class="arch-items">
+            <span class="arch-pill pri-blue">GCP VM</span>
+            <span class="arch-pill">Cloud SQL · Postgres</span>
+            <span class="arch-pill">Cloud Storage · CDN</span>
+            <span class="arch-pill">Secret Manager · IAM</span>
+          </div>
+        </div>
+        <div class="arch-band">
+          <div class="arch-label">Data sources</div>
+          <div class="arch-items">
+            <span class="arch-pill">Apple Health · Oura</span>
+            <span class="arch-pill">Amplitude · Intercom</span>
+            <span class="arch-pill">GitHub · Linear · Slack</span>
+            <span class="arch-pill">Buffer · X · RSS · Readwise</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>08 · Helm — Personal OS</span>
+      <span>Section · 3 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 09 COMPOUNDING EFFECT ============ -->
+  <section class="slide" data-slide="9">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">09 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">Section 4 · The compounding effect</div>
+      <h2 style="max-width: 22ch;">The longer I run it, the&nbsp;sharper&nbsp;it gets.</h2>
+      <p class="pullquote ed" style="margin-top: 14px; max-width: 36ch; font-size: clamp(20px, 2vw, 28px);">
+        Every input I give it becomes context the agent indexes and graphs.
+      </p>
+
+      <div style="margin-top: 18px; border-radius: 14px; overflow: hidden;">
+        <img src="assets/knowledge-graph.jpg" alt="Knowledge graph network — central Index + Graph node radiating to ten satellite nodes: Projects, Tasks, Email, Team Comms, Marketing, Reading, Reflections, Action Items, Core Memories, Learning" style="width: 100%; display: block;">
+      </div>
+
+      <div class="use-row">
+        <div class="use-card">
+          <span class="num">01</span>
+          <span class="body"><strong>Smarter learning plans.</strong><br>Knows what I've already learned · skips redundancy.</span>
+        </div>
+        <div class="use-card">
+          <span class="num">02</span>
+          <span class="body"><strong>Interleaving recognition.</strong><br>Spots when new learning can land in a live project.</span>
+        </div>
+        <div class="use-card">
+          <span class="num">03</span>
+          <span class="body"><strong>Repeatable tools.</strong><br>Pulls patterns from past projects so I don't rebuild.</span>
+        </div>
+        <div class="use-card">
+          <span class="num">04</span>
+          <span class="body"><strong>Authentic stories.</strong><br>Surfaces emotionally true moments for marketing &amp; talks.</span>
+        </div>
+      </div>
+      <p class="pullquote ed" style="font-size: clamp(18px, 1.6vw, 22px); color: var(--ink-mute); max-width: 50ch; margin-top: 18px; text-align: center; margin-left: auto; margin-right: auto;">
+        It catches my jet stream &mdash; frees me to focus on creative work.
+      </p>
+    </div>
+
+    <div class="slide-foot">
+      <span>09 · Compounding effect</span>
+      <span>Section · 4 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 10 WHAT'S LOADED ============ -->
+  <section class="slide" data-slide="10">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">10 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">What's loaded · cognitive scaffolding</div>
+      <h2 style="max-width: 22ch;">It's not just an agent.<br>It's a layered cognitive&nbsp;system.</h2>
+
+      <div class="fw-grid" style="margin-top: 24px;">
+        <div class="fw-col c1">
+          <h3>Productivity &amp; execution</h3>
+          <ul>
+            <li>GTD — freshness checks <small>David Allen</small></li>
+            <li>PARA<small>Tiago Forte</small></li>
+            <li>Quarterly OKRs<small>upgraded from Best Self</small></li>
+            <li>SMART goals</li>
+            <li>Time blocking</li>
+            <li>20-mile march<small>Jim Collins</small></li>
+          </ul>
+        </div>
+        <div class="fw-col c2">
+          <h3>Reflection &amp; habits</h3>
+          <ul>
+            <li>Best Self sprint<small>13-week structure</small></li>
+            <li>Gratitude journaling</li>
+            <li>Daily wins + lessons</li>
+            <li>Atomic Habits<small>identity-based design</small></li>
+            <li>Mental models<small>Farnam Street · Shane Parrish</small></li>
+          </ul>
+        </div>
+        <div class="fw-col c3">
+          <h3>Tutor &amp; learning science</h3>
+          <ul>
+            <li>Socratic method<small>challenges, doesn't just answer</small></li>
+            <li>Active recall</li>
+            <li>Spaced repetition</li>
+            <li>Feynman technique</li>
+            <li>Interleaving</li>
+            <li>Learning inventory<small>courses · memories · career</small></li>
+          </ul>
+        </div>
+        <div class="fw-col c4 row2">
+          <h3>Financial planning &amp; management</h3>
+          <ul>
+            <li>Expense reconciliations</li>
+            <li>Monthly budget-to-actual reviews</li>
+            <li>Annual financial planning<small>personal + company</small></li>
+            <li>Proactive expense optimization</li>
+            <li>Balance sheet analysis &amp; optimization</li>
+          </ul>
+        </div>
+        <div class="fw-col c5 row2">
+          <h3>Health monitoring &amp; management</h3>
+          <ul>
+            <li>Whole-health reflections<small>wearable + lab data fused</small></li>
+            <li>Custom plans, guides, &amp; routines<small>tied to specific health goals</small></li>
+            <li>Accountability reminders<small>daily planning + review</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>10 · What's loaded</span>
+      <span>Section · 4 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 11 INTERFACE INVERSION ============ -->
+  <section class="slide" data-slide="11">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">11 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">The interface inversion</div>
+      <h2 style="max-width: 26ch;">Software stops needing a UI.<br>My agent uses it &mdash; and builds what's missing.</h2>
+      <p class="lede" style="margin-top: 16px;">Most of the SaaS surface area I used to navigate by hand is now driven by Helm on my behalf. When something doesn't exist, the agent provisions the infra itself.</p>
+
+      <div class="inv-grid" style="margin-top: 28px;">
+        <div class="inv-col">
+          <h4>Software my agent uses for me</h4>
+          <p class="inv-sub">No app-switching. Helm queries, writes, posts, updates &mdash; I get a synthesis.</p>
+          <div class="inv-pills">
+            <span class="arch-pill">Amplitude</span>
+            <span class="arch-pill">Slack</span>
+            <span class="arch-pill">Linear</span>
+            <span class="arch-pill">Intercom</span>
+            <span class="arch-pill">GitHub</span>
+            <span class="arch-pill">Figma</span>
+            <span class="arch-pill">Notion</span>
+            <span class="arch-pill">Buffer</span>
+            <span class="arch-pill">X / Twitter</span>
+            <span class="arch-pill">Readwise</span>
+            <span class="arch-pill">Apple Health</span>
+            <span class="arch-pill">Oura</span>
+            <span class="arch-pill">RSS &amp; web search</span>
+            <span class="arch-pill">Google Calendar</span>
+            <span class="arch-pill">Gmail</span>
+          </div>
+        </div>
+
+        <div class="inv-col">
+          <h4>And builds what it needs</h4>
+          <p class="inv-sub">When the gap requires real infra, Helm provisions it on demand.</p>
+          <div class="built-stack">
+            <div class="built-row"><span class="bn">01</span><div><strong>Health data pipeline.</strong> Apple Health + Oura ingestion → Cloud SQL → ritual-aware eval.</div></div>
+            <div class="built-row"><span class="bn">02</span><div><strong>Personal journaling + PM.</strong> Cloud SQL · Discord capture · Obsidian sync.</div></div>
+            <div class="built-row"><span class="bn">03</span><div><strong>Content asset CDN.</strong> Cloud Storage + URL map for agent-addressable templates.</div></div>
+            <div class="built-row"><span class="bn">04</span><div><strong>Family office data model.</strong> Schema + workflows for shared long-term planning.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="meta" style="margin-top: 22px; max-width: 80ch; font-size: 12px; color: var(--ink-mute);">
+        <strong style="color: var(--ink);">Obvious objection:</strong> not everyone has the technical sophistication to do this safely &amp; cost-effectively. <span class="accent-green">→</span> Solvable. Future agents will run on routines that evaluate, update, and harden the infra under the hood &mdash; even the least technical person gets a team of agents managing it.
+      </p>
+    </div>
+
+    <div class="slide-foot">
+      <span>11 · Interface inversion</span>
+      <span>Section · 4 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 12 RECEIPTS ============ -->
+  <section class="slide" data-slide="12">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">12 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">The receipts</div>
+      <h2 style="max-width: 24ch;">4 months. 20+&nbsp;projects. One agent.</h2>
+      <p class="lede" style="margin-top: 12px;">Everything below shipped while running Sober Sidekick day-to-day. Helm assisted with all of it.</p>
+
+      <div class="recpt-grid" style="margin-top: 24px;">
+        <div class="recpt-block work">
+          <div class="head">
+            <div>
+              <div class="ttl">Sober Sidekick · work</div>
+              <div class="meta accent-green">Forest green</div>
+            </div>
+            <div class="count">8 projects</div>
+          </div>
+          <ul>
+            <li>SSK platform rebuild · Next.js 16 + Prisma + Cloud Run</li>
+            <li>AI compliance agent · DDQ automation, vendor eval</li>
+            <li>Enterprise security DDQ submission</li>
+            <li>6-month product &amp; engineering roadmap</li>
+            <li>sobersidekick.com marketing site</li>
+            <li>Provider Navigator matching</li>
+            <li>SOW portal</li>
+            <li>Quarterly board reports · agentically generated</li>
+          </ul>
+        </div>
+
+        <div class="recpt-block real">
+          <div class="head">
+            <div>
+              <div class="ttl">Real estate &amp; investment</div>
+              <div class="meta accent-copper">Copper earth</div>
+            </div>
+            <div class="count">2 projects</div>
+          </div>
+          <ul>
+            <li>KARST · Bentonville wellness destination · <em>fully agentically run</em></li>
+            <li>Metro Market · 6-phase NWA SMB investment screen</li>
+          </ul>
+        </div>
+
+        <div class="recpt-block brand">
+          <div class="head">
+            <div>
+              <div class="ttl">Personal brand &amp; content</div>
+              <div class="meta accent-blue">Clear blue</div>
+            </div>
+            <div class="count">3 projects</div>
+          </div>
+          <ul>
+            <li>Personal brand identity · web, design system, voice</li>
+            <li>TEDx Bentonville promotional campaign · 30-day, 4-phase</li>
+            <li>Personal OS · open-source framework</li>
+          </ul>
+        </div>
+
+        <div class="recpt-block life">
+          <div class="head">
+            <div>
+              <div class="ttl">Personal life systems</div>
+              <div class="meta accent-gold">Solar gold</div>
+            </div>
+            <div class="count">3 projects</div>
+          </div>
+          <ul>
+            <li>Family office app · financial · philanthropic · health · education · impact</li>
+            <li>Personal LMS + learning sprints</li>
+            <li>Health coaching framework · workouts · recovery · automated reports</li>
+          </ul>
+        </div>
+
+        <div class="recpt-foot">
+          <span class="ttl">Plus community contributions</span>
+          <span class="items">Open Wearables &nbsp;·&nbsp; Agents Everywhere (NWA) &nbsp;·&nbsp; Justin's startup (music-driven breathwork)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>12 · The receipts</span>
+      <span>Section · 4 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 13 PERSONAL HEALTH RECORD ============ -->
+  <section class="slide" data-slide="13">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">13 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">Section 5 · The medtech extension</div>
+      <h2 style="max-width: 22ch;">The personal health record moves to the&nbsp;person.</h2>
+      <p class="lede" style="margin-top: 14px;">Custody + biosensor explosion + agent &nbsp;=&nbsp; a health coach better than any human can offer. Depth. Persistence. Cross-domain synthesis.</p>
+
+      <div class="biosensors" style="margin-top: 28px;">
+        <div class="bio-col now">
+          <h4>Accessible today (consumers)</h4>
+          <div class="bio-list">
+            <div class="bio-item"><span class="n">HRV · sleep · RHR · SpO2 · skin temp</span><span class="v">Oura · Whoop · Apple · Garmin</span></div>
+            <div class="bio-item"><span class="n">ECG</span><span class="v">Apple Watch · KardiaMobile</span></div>
+            <div class="bio-item"><span class="n">Continuous glucose (CGM)</span><span class="v">Levels · Lingo · Stelo</span></div>
+            <div class="bio-item"><span class="n">100+ biomarker blood panels</span><span class="v">Function Health · InsideTracker</span></div>
+            <div class="bio-item"><span class="n">Hormones · thyroid · cortisol</span><span class="v">Function · Mira · Inito</span></div>
+            <div class="bio-item"><span class="n">Multi-cancer early detection</span><span class="v">Galleri (single blood draw)</span></div>
+            <div class="bio-item"><span class="n">Whole genome sequencing</span><span class="v">Nucleus · Nebula · 23andMe</span></div>
+            <div class="bio-item"><span class="n">Gut microbiome (stool)</span><span class="v">Viome · Zoe · Tiny Health</span></div>
+            <div class="bio-item"><span class="n">Smart toilet · urine</span><span class="v">Withings U-Scan</span></div>
+            <div class="bio-item"><span class="n">Body composition</span><span class="v">Withings · DEXA clinics</span></div>
+            <div class="bio-item"><span class="n">Heavy metals · vitamins · inflammation</span><span class="v">Function · direct labs</span></div>
+            <div class="bio-item"><span class="n">Metabolic / GLP-1 programs</span><span class="v">Rhythm Health</span></div>
+          </div>
+        </div>
+        <div class="bio-col next">
+          <h4>Coming soon (next 12–24 mo)</h4>
+          <div class="bio-list">
+            <div class="bio-item"><span class="n">Continuous cortisol</span><span class="v">Eli Health · Bloom Diagnostics</span></div>
+            <div class="bio-item"><span class="n">Cuffless continuous BP</span><span class="v">Aktiia · Apple Watch (rumored)</span></div>
+            <div class="bio-item"><span class="n">Sweat-patch electrolytes</span><span class="v">Epicore Biosystems</span></div>
+            <div class="bio-item"><span class="n">Continuous hormone monitoring</span><span class="v">interstitial · early stage</span></div>
+            <div class="bio-item"><span class="n">Continuous ketones</span><span class="v">multiple in clinicals</span></div>
+            <div class="bio-item"><span class="n">Real-time inflammation</span><span class="v">sweat · interstitial</span></div>
+            <div class="bio-item"><span class="n">Smart-toilet stool analysis</span><span class="v">passive microbiome &amp; markers</span></div>
+            <div class="bio-item"><span class="n">More frequent at-home blood</span><span class="v">Tasso · capillary devices</span></div>
+            <div class="bio-item"><span class="n">At-home EEG / brain signal</span><span class="v">Muse · Halo · Neurosity</span></div>
+            <div class="bio-item"><span class="n">Vaginal &amp; oral microbiome</span><span class="v">Daye · Bristle</span></div>
+            <div class="bio-item"><span class="n">Continuous lactate</span><span class="v">athlete-targeted wearables</span></div>
+            <div class="bio-item"><span class="n">Skin · breath · saliva sensors</span><span class="v">multiple early-stage</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>13 · Personal health record</span>
+      <span>Section · 5 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 14 DISINTERMEDIATION ============ -->
+  <section class="slide" data-slide="14">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">14 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">Disintermediation</div>
+      <h2 style="max-width: 22ch;">Aggregators become resellers.<br>Specialty agents&nbsp;win.</h2>
+      <p class="lede" style="margin-top: 14px;">Customers stop opening apps. The interface shifts from human-to-app to agent-to-agent. SaaS doesn't die — its surface area transforms.</p>
+
+      <div class="vc-wrap" style="margin-top: 28px;">
+        <div class="vc-col now">
+          <h4>Today · human-to-app</h4>
+          <div class="vc-flow">
+            <div class="vc-step user">You</div>
+            <div class="vc-arr">↓</div>
+            <div class="vc-step agg">Aggregator app · Oura · Whoop · EHR vendor</div>
+            <div class="vc-arr">↓</div>
+            <div class="vc-step spec">Specialty providers (under contract, often hidden)</div>
+          </div>
+        </div>
+        <div class="vc-col next">
+          <h4>Next · agent-to-agent</h4>
+          <div class="vc-flow">
+            <div class="vc-step user">You</div>
+            <div class="vc-arr">↕</div>
+            <div class="vc-step agent">Personal agent (your custody, your context)</div>
+            <div class="vc-arr">↕</div>
+            <div class="vc-step spec">Specialty agents · queried directly · no UI middleware</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>14 · Disintermediation</span>
+      <span>Section · 5 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 15 FOUR BETS ============ -->
+  <section class="slide" data-slide="15">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">15 / 16</span>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="section-label">Section 6 · The punchline</div>
+      <h2 style="max-width: 26ch;">If I were starting in medtech today &mdash; four&nbsp;bets.</h2>
+
+      <div class="bets" style="margin-top: 32px;">
+        <div class="bet">
+          <span class="num">01</span>
+          <h3>Bet on custody.</h3>
+          <p>Build products that run on data the user owns, not data you store. Architect for the personal hybrid cloud, even before consumers can custody it cleanly.</p>
+        </div>
+        <div class="bet">
+          <span class="num">02</span>
+          <h3>Bet on open-source models.</h3>
+          <p>Frontier models stay premium for hard one-offs. Daily-driver intelligence runs on open weights. The model layer becomes a commodity &mdash; not a moat.</p>
+        </div>
+        <div class="bet">
+          <span class="num">03</span>
+          <h3>Bet on edge inference.</h3>
+          <p>Within 12-18 months daily-driver AI runs locally on device. If your wedge depends on a frontier-model API margin, your moat is shrinking faster than you think.</p>
+        </div>
+        <div class="bet">
+          <span class="num">04</span>
+          <h3>Bet on agent-to-agent.</h3>
+          <p>Customers stop opening apps. Design your specialty product to be queryable by <em>their</em> agent, not displayed in <em>your</em> UI. The interface surface inverts.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>15 · 4 bets</span>
+      <span>Section · 6 / 6</span>
+    </div>
+  </section>
+
+  <!-- ============ 16 CLOSING ============ -->
+  <section class="slide" data-slide="16">
+    <div class="slide-head">
+      <span class="brand">JORDAN CARLISLE · HELM</span>
+      <span class="mono">16 / 16</span>
+    </div>
+
+    <div class="close-grid" style="margin: auto 0;">
+      <div>
+        <div class="section-label">Closing</div>
+        <h1 style="max-width: 14ch;">Build for the<br>person.<br><span class="ed">Not the silo.</span></h1>
+      </div>
+      <div class="close-links">
+        <a class="close-link" href="https://sobersidekick.com">
+          <div>
+            <div class="role">Day job</div>
+            <div class="label">Sober Sidekick · sobersidekick.com</div>
+          </div>
+          <span class="arr">↗</span>
+        </a>
+        <a class="close-link" href="https://www.youtube.com/watch?v=XyF2W_v-EVk">
+          <div>
+            <div class="role">TEDx Bentonville 2025</div>
+            <div class="label">Building a Personal Operating System for Healthy Lifestyle</div>
+          </div>
+          <span class="arr">↗</span>
+        </a>
+        <a class="close-link" href="https://github.com/jordantcarlisle/personal-os">
+          <div>
+            <div class="role">Public framework</div>
+            <div class="label">Personal OS · github.com/jordantcarlisle</div>
+          </div>
+          <span class="arr">↗</span>
+        </a>
+        <a class="close-link" href="https://x.com/jordantcarlisle">
+          <div>
+            <div class="role">Build journal</div>
+            <div class="label">@jordantcarlisle</div>
+          </div>
+          <span class="arr">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide-foot">
+      <span>16 · Close</span>
+      <span>Thank you · Spencer</span>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-controls">
+  <button id="prev" aria-label="Previous slide">←</button>
+  <span class="counter"><span id="cur">01</span> / <span id="total">15</span></span>
+  <button id="next" aria-label="Next slide">→</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  document.getElementById('total').textContent = String(total).padStart(2, '0');
+  let idx = 0;
+  const cur = document.getElementById('cur');
+  const progress = document.getElementById('progress');
+
+  function show(i) {
+    if (i < 0) i = 0;
+    if (i >= total) i = total - 1;
+    slides[idx].classList.remove('active');
+    slides[i].classList.add('active');
+    idx = i;
+    cur.textContent = String(idx + 1).padStart(2, '0');
+    progress.style.width = ((idx + 1) / total * 100) + '%';
+    history.replaceState(null, '', '#s' + (idx + 1));
+  }
+
+  document.getElementById('next').addEventListener('click', () => show(idx + 1));
+  document.getElementById('prev').addEventListener('click', () => show(idx - 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(idx + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(idx - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); show(0); }
+    else if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    else if (/^[0-9]$/.test(e.key)) {
+      // Number keys → slide N (1-9). Use ` for slide 10, etc.
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= total) show(n - 1);
+    }
+  });
+
+  // Init from hash
+  const m = location.hash.match(/#s(\d+)/);
+  if (m) show(parseInt(m[1], 10) - 1);
+  else progress.style.width = (1 / total * 100) + '%';
+</script>
+
+</body>
+</html>
